@@ -1,12 +1,21 @@
 .login {
   background-color: white;
   height: 100dvh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+
+  &__navbar {
+    padding: 4rem 2rem;
+    background-color: #502f7e;
+    // margin-bottom: 4rem;
+  }
+  &__subtitle {
+    font-size: 0.8125rem;
+  }
 
   &__form {
     width: 80%;
+    justify-self: center;
+    align-self: center;
   }
 }

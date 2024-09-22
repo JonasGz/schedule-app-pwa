@@ -2,20 +2,19 @@
 import React from "react";
 import "./page.scss";
 import Form from "./components/Form/Form";
+import Navbar from "./components/Navbar/Navbar";
+import { MdLock } from "react-icons/md";
 
 export default function Home() {
   return (
     <div className="login">
-      <div className="login__navbar">
-        <div className="login__navbar-title">
-          <h3>LOGIN</h3>
-        </div>
-        <div className="login__navbar-subtitle">
-          <p>Authentication</p>
-        </div>
+      <Navbar title="LOGIN" subtitle="Authentication" />
+      <div className="login__icon">
+        <MdLock size={92} />
       </div>
+
       <div className="login__form">
-        <Form />
+        <Form type="login" />
       </div>
     </div>
   );

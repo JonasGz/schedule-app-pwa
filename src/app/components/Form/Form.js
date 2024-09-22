@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Form.scss";
 
-const Form = () => {
+const Form = ({ type }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,20 +37,37 @@ const Form = () => {
           value={password}
         />
       </div>
-      <div className="form-container__buttons">
-        <button className="form-container__button" type="submit">
-          Login
-        </button>
-        <span className="form-container__inner-text">
-          Do you have an account?
-        </span>
-        <button
-          className="form-container__button form-container__button--secondary"
-          type="button"
-        >
-          Sign up
-        </button>
-      </div>
+      {type === "login" ? (
+        <div className="form-container__buttons">
+          <button className="form-container__button" type="submit">
+            Login
+          </button>
+          <span className="form-container__inner-text">
+            No account? Sign up now!
+          </span>
+          <button
+            className="form-container__button form-container__button--secondary"
+            type="button"
+          >
+            Sign up
+          </button>
+        </div>
+      ) : (
+        <div className="form-container__buttons">
+          <button className="form-container__button" type="submit">
+            Sign up
+          </button>
+          <span className="form-container__inner-text">
+            Do you have an account?
+          </span>
+          <button
+            className="form-container__button form-container__button--secondary"
+            type="button"
+          >
+            Login
+          </button>
+        </div>
+      )}
     </form>
   );
 };

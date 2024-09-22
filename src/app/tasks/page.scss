@@ -1,4 +1,4 @@
-.login {
+.tasks {
   background-color: white;
   height: 100dvh;
   display: flex;
@@ -6,15 +6,7 @@
   justify-content: space-between;
   align-items: center;
 
-  &__icon {
-    background-color: #502f7e;
-    width: max-content;
-    height: max-content;
-    border-radius: 4rem;
-    padding: 1rem;
-  }
-
-  &__form {
+  &__tasks {
     width: 80%;
     margin-bottom: 2rem;
   }

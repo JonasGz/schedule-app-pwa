@@ -1,0 +1,32 @@
+.tile {
+  background-color: #f6f3fa;
+  color: #1b1b1b;
+  padding: 1.4rem;
+  width: 100%;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px 0 #c9c9c9;
+  cursor: pointer;
+  &__title {
+    font-size: 0.8125rem;
+  }
+
+  &__subtitle {
+    font-size: 0.8125rem;
+    opacity: 0.6;
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  &--completed {
+    background-color: #71519d;
+    color: #fff;
+  }
+}

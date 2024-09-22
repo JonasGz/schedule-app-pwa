@@ -1,0 +1,30 @@
+.dashboard {
+  background-color: white;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  &__user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  &__hello {
+    font-size: 1rem;
+    color: #838383;
+  }
+
+  &__username {
+    font-size: 1.25rem;
+    color: #292929;
+  }
+
+  &__tasks {
+    width: 80%;
+    margin-bottom: 2rem;
+  }
+}

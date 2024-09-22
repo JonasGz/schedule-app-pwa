@@ -9,7 +9,9 @@ export default function Tasks() {
   return (
     <div className="tasks">
       <Navbar title="TASKS" subtitle="Control" />
-      <AddTasks />
+      <div className="tasks__add-tasks">
+        <AddTasks />
+      </div>
       <Image src="/images/break.png" width={91} height={26} alt="break" />
 
       <div className="tasks__tasks">

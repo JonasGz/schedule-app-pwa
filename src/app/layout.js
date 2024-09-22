@@ -1,3 +1,4 @@
+import { AuthProvider } from "../../contexts/AuthContext";
 import "./globals.scss";
 
 export const metadata = {
@@ -11,7 +12,9 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="manifest" href="/manifest.json" as="manifest" />
       </head>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

@@ -1,16 +1,10 @@
 "use client";
-import { React, useEffect, useState } from "react";
+import { React, useEffect } from "react";
 import "./List.scss";
 import Tile from "../Tile/Tile";
-import { getTasks } from "../../../../public/utils/indexedDb";
+import { useTask } from "../../../../contexts/TaskContext";
 
-const List = ({ concluded }) => {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    const tasks = getTasks();
-    tasks.then((tasks) => setTasks(tasks));
-  }, [tasks]);
+const List = ({ concluded, tasks }) => {
   return concluded ? (
     <ul className="list">
       <Tile title="Reunião X" time="10:11h" completed={true} />

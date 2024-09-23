@@ -54,7 +54,6 @@ export const getTasks = async () => {
     const db = await openIndexedDB();
     const transaction = db.transaction(["tasks"], "readonly");
     const store = transaction.objectStore("tasks");
-    let tasks;
 
     return new Promise((resolve, reject) => {
       const request = store.getAll();

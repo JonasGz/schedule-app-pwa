@@ -6,6 +6,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -19,8 +20,40 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
+export const db = getFirestore(app);
 // const analytics = getAnalytics(app);
+
+export const addTaskToFirestore = async (task) => {
+  try {
+    if (typeof task === "object" && !Array.isArray(task) && task !== null) {
+      if (Object.keys(task).length === 0) {
+        throw new Error("O objeto de tarefa está vazio.");
+      }
+
+      const docRef = await addDoc(collection(db, "tasks"), task);
+      console.log("Documento escrito com sucesso: ", docRef.id);
+    } else {
+      throw new Error(
+        "Dados inválidos para adicionar ao Firestore. Esperado um objeto."
+      );
+    }
+  } catch (error) {
+    console.error("Erro ao adicionar o documento:", error);
+  }
+};
+
+export const getTasksFromFirestore = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "tasks"));
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Erro ao obter tarefas do Firestore:", error);
+    return [];
+  }
+};
 
 export const signUp = async (email, password, displayName) => {
   try {

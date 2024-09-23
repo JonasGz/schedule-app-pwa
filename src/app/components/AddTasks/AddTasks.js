@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import "./AddTasks.scss";
 import { IoMdAddCircle } from "react-icons/io";
 import { addTask } from "../../../../public/utils/indexedDb";
+import { addTaskToFirestore } from "../../../../public/utils/firebase";
 
-const AddTasks = () => {
+const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("");
 
@@ -23,7 +24,9 @@ const AddTasks = () => {
       taskTime,
     };
     try {
+      await addTaskToFirestore(newTask);
       await addTask(newTask);
+      setAtt(1);
     } catch (error) {
       console.error("Erro ao adicionar nova tarefa:", error);
     }

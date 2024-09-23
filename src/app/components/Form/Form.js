@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Form.scss";
 import { signUp, signIn } from "../../../../public/utils/firebase";
+import { useRouter } from "next/navigation";
 
 const Form = ({ type }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   function changeName(e) {
     setName(e.target.value);
@@ -59,6 +61,7 @@ const Form = ({ type }) => {
         <button
           className="form-container__button form-container__button--secondary"
           type="button"
+          onClick={() => router.push("/signup")}
         >
           Sign up
         </button>
@@ -102,6 +105,7 @@ const Form = ({ type }) => {
         <button
           className="form-container__button form-container__button--secondary"
           type="button"
+          onClick={() => router.push("/")}
         >
           Login
         </button>

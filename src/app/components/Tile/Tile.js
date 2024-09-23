@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { IoCloseCircle } from "react-icons/io5";
 import { MdOutlineRemoveCircle } from "react-icons/md";
 import "./Tile.scss";
+import { getTasks, openIndexedDB } from "../../../../public/utils/indexedDb";
 
 const Tile = ({ title, time, completed }) => {
   return completed ? (

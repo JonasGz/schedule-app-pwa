@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!loading && user) {
       setName(user.displayName);
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } else {
       setUser(null);
       setLoading(true);

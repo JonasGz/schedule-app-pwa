@@ -23,10 +23,11 @@ const AddTasks = ({ setAtt }) => {
       taskName,
       taskTime,
     };
+
     try {
-      await addTaskToFirestore(newTask);
+      // await addTaskToFirestore(newTask);
       await addTask(newTask);
-      setAtt(1);
+      setAtt((a) => a + 1);
     } catch (error) {
       console.error("Erro ao adicionar nova tarefa:", error);
     }

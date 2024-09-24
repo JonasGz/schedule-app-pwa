@@ -5,9 +5,12 @@ import Image from "next/image";
 import List from "../components/List/List";
 import "./page.scss";
 import { useAuth } from "../../../contexts/AuthContext";
+import { useTask } from "../../../contexts/TaskContext";
 
 export default function Dashboard() {
   const { name } = useAuth();
+  const { tasks } = useTask();
+
   return (
     <div className="dashboard">
       <Navbar title="DASHBOARD" subtitle="Welcome" />
@@ -20,7 +23,7 @@ export default function Dashboard() {
       </div>
 
       <div className="dashboard__tasks">
-        <List concluded={true} />
+        <List tasks={tasks} concluded={true} />
       </div>
     </div>
   );

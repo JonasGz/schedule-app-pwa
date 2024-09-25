@@ -36,39 +36,38 @@ export const TaskProvider = ({ children }) => {
   }
 
   async function syncTasks(tasksFromDB, tasksFromFirestore) {
-    // const tasksMap = new Map();
-    //   tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
-    //   tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
-    //   const mergedTasks = Array.from(tasksMap.values());
-    //   await Promise.all(
-    //     mergedTasks.map(async (task) => {
-    //       try {
-    //         await addTask(task);
-    //       } catch (error) {
-    //         console.error(
-    //           "Erro ao adicionar tarefa durante a sincronização:",
-    //           error
-    //         );
-    //       }
-    //     })
-    //   );
-    //   setTasks(mergedTasks);
+    const tasksMap = new Map();
+    tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
+    tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
+    const mergedTasks = Array.from(tasksMap.values());
+    await Promise.all(
+      mergedTasks.map(async (task) => {
+        try {
+          await addTask(task);
+        } catch (error) {
+          console.error(
+            "Erro ao adicionar tarefa durante a sincronização:",
+            error
+          );
+        }
+      })
+    );
+    filterTasks(mergedTasks);
+    setTasks(mergedTasks);
   }
 
   const loadTasks = async () => {
     try {
       const tasksFromDB = await getTasks();
-      // const tasksFromFirestore = await getTasksFromFirestore();
 
-      filterTasks(tasksFromDB);
+      if (navigator.onLine) {
+        const tasksFromFirestore = await getTasksFromFirestore();
 
-      setTasks(tasksFromDB);
-
-      // if (navigator.onLine) {
-      //   syncTasks(tasksFromDB, tasksFromFirestore)
-      // } else {
-      //   setTasks(tasksFromDB);
-      // }
+        syncTasks(tasksFromDB, tasksFromFirestore);
+      } else {
+        filterTasks(tasksFromDB);
+        setTasks(tasksFromDB);
+      }
     } catch (error) {
       console.error("Erro ao carregar e mesclar tarefas:", error);
     }

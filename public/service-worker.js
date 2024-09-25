@@ -15,34 +15,34 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// self.addEventListener("sync", (event) => {
-//   if (event.tag === "sync-tasks") {
-//     event.waitUntil(syncTasksWithFirebase());
-//   }
-// });
+self.addEventListener("sync", (event) => {
+  if (event.tag === "sync-tasks") {
+    event.waitUntil(syncTasksWithFirebase());
+  }
+});
 
-// async function syncTasksWithFirebase() {
-//   const tasks = await getTasksFromIndexedDB();
-//   for (const task of tasks) {
-//     await addTaskToFirestore(task);
-//   }
-// }
+async function syncTasksWithFirebase() {
+  const tasks = await getTasksFromIndexedDB();
+  for (const task of tasks) {
+    await addTaskToFirestore(task);
+  }
+}
 
-// async function getTasksFromIndexedDB() {
-//   return new Promise((resolve, reject) => {
-//     const request = indexedDB.open("my-tasks-db", 1);
+async function getTasksFromIndexedDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("my-tasks-db", 1);
 
-//     request.onsuccess = (event) => {
-//       const db = event.target.result;
-//       const transaction = db.transaction(["tasks"], "readonly");
-//       const store = transaction.objectStore("tasks");
-//       const getAllRequest = store.getAll();
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      const transaction = db.transaction(["tasks"], "readonly");
+      const store = transaction.objectStore("tasks");
+      const getAllRequest = store.getAll();
 
-//       getAllRequest.onsuccess = () => resolve(getAllRequest.result);
-//       getAllRequest.onerror = () =>
-//         reject("Erro ao obter tarefas do IndexedDB");
-//     };
+      getAllRequest.onsuccess = () => resolve(getAllRequest.result);
+      getAllRequest.onerror = () =>
+        reject("Erro ao obter tarefas do IndexedDB");
+    };
 
-//     request.onerror = () => reject("Erro ao abrir IndexedDB");
-//   });
-// }
+    request.onerror = () => reject("Erro ao abrir IndexedDB");
+  });
+}

@@ -25,9 +25,12 @@ const AddTasks = ({ setAtt }) => {
     };
 
     try {
-      // await addTaskToFirestore(newTask);
       await addTask(newTask);
       setAtt((a) => a + 1);
+      if (navigator.onLine) {
+        await addTaskToFirestore(newTask);
+        setAtt((a) => a + 1);
+      }
     } catch (error) {
       console.error("Erro ao adicionar nova tarefa:", error);
     }

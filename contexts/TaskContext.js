@@ -1,10 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { addTask, getTasks } from "../public/utils/indexedDb";
-import {
-  addTaskToFirestore,
-  getTasksFromFirestore,
-} from "../public/utils/firebase";
+import { getTasksFromFirestore } from "../public/utils/firebase";
 
 const TaskContext = createContext();
 
@@ -62,7 +59,7 @@ export const TaskProvider = ({ children }) => {
 
       if (navigator.onLine) {
         const tasksFromFirestore = await getTasksFromFirestore();
-
+        console.log("load feito");
         syncTasks(tasksFromDB, tasksFromFirestore);
       } else {
         filterTasks(tasksFromDB);

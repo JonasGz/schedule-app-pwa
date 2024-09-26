@@ -6,7 +6,14 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  setDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -29,9 +36,10 @@ export const addTaskToFirestore = async (task) => {
       if (Object.keys(task).length === 0) {
         throw new Error("O objeto de tarefa está vazio.");
       }
-
-      const docRef = await addDoc(collection(db, "tasks"), task);
-      console.log("Documento escrito com sucesso: ", docRef.id);
+      const stringId = String(task.id);
+      const docRef = await doc(db, "tasks", stringId);
+      await setDoc(docRef, task);
+      console.log("Documento criado ou atualizado com ID específico.");
     } else {
       throw new Error(
         "Dados inválidos para adicionar ao Firestore. Esperado um objeto."
@@ -39,6 +47,17 @@ export const addTaskToFirestore = async (task) => {
     }
   } catch (error) {
     console.error("Erro ao adicionar o documento:", error);
+  }
+};
+
+export const removeTaskFromFirestore = async (taskId) => {
+  try {
+    const stringId = String(taskId);
+    const taskRef = doc(db, "tasks", stringId);
+    await deleteDoc(taskRef);
+    console.log(`Documento com ID ${taskId} removido com sucesso.`);
+  } catch (error) {
+    console.error("Erro ao remover o documento:", error);
   }
 };
 

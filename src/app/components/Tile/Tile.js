@@ -12,6 +12,7 @@ import {
   notConcludedTask,
 } from "../../../../public/utils/indexedDb";
 import { useTask } from "../../../../contexts/TaskContext";
+import { removeTaskFromFirestore } from "../../../../public/utils/firebase";
 
 const Tile = ({ title, time, completed, id }) => {
   const { setAtt } = useTask();
@@ -26,8 +27,11 @@ const Tile = ({ title, time, completed, id }) => {
     setAtt((a) => a + 1);
   };
 
-  const deleteTask = (id) => {
-    removeTask(id);
+  const deleteTask = async (id) => {
+    await removeTask(id);
+    if (navigator.onLine) {
+      await removeTaskFromFirestore(id);
+    }
     setAtt((a) => a + 1);
   };
 

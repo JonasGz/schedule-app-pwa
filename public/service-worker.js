@@ -1,3 +1,5 @@
+import { addTaskToFirestore } from "./utils/firebase";
+
 const CACHE_NAME = "static-cache-1";
 const CACHE_ASSETS = [
   "/icons/144x144.png",

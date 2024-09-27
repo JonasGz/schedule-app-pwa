@@ -9,12 +9,15 @@ const RegisterServiceWorker = () => {
         .register("/service-worker.js")
         .then((registration) => {
           console.log("Service worker registered: ", registration);
+          return navigator.serviceWorker.ready;
+        })
+        .then((registration) => {
+          return registration.sync.register("sync-tasks");
+        })
+        .then(() => {
+          console.log("sync event registered!");
         })
         .catch((error) => console.log("Error:", error));
-
-      navigator.serviceWorker.ready.then((registration) => {
-        registration.sync.register("sync-tasks");
-      });
     }
   }, []);
 

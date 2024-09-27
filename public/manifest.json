@@ -1,6 +1,6 @@
 {
-  "short_name": "ScheduleApp",
   "name": "Schedule App",
+  "short_name": "ScheduleApp",
   "description": "Um app de agenda de tarefas",
   "start_url": "/",
   "display": "standalone",

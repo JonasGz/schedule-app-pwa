@@ -1,6 +1,6 @@
 "use client";
 
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import "./page.scss";
 import Navbar from "../components/Navbar/Navbar";
 import List from "../components/List/List";

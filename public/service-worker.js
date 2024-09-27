@@ -1,5 +1,3 @@
-import { addTaskToFirestore } from "./utils/firebase";
-
 const CACHE_NAME = "static-cache-1";
 const CACHE_ASSETS = [
   "/icons/144x144.png",
@@ -18,15 +16,25 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("sync", (event) => {
+  console.log("sync iniciado:", event.tag);
   if (event.tag === "sync-tasks") {
+    console.log("com sucesso");
     event.waitUntil(syncTasksWithFirebase());
   }
 });
 
 async function syncTasksWithFirebase() {
+  console.log("syncTaskWithFirebase iniciado");
+
   const tasks = await getTasksFromIndexedDB();
-  for (const task of tasks) {
-    await addTaskToFirestore(task);
+
+  try {
+    for (const task of tasks) {
+      await addTaskToFirestore(task);
+      console.log("syncTaskWithFirebase" + task);
+    }
+  } catch (error) {
+    console.log("erro na adição de tasks", error);
   }
 }
 

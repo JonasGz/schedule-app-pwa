@@ -2,8 +2,14 @@
   width: 100%;
   padding: 2.8rem 2rem;
   background-color: #502f7e;
+  display: flex;
+  flex-direction: row;
   // margin-bottom: 4rem;
   &__subtitle {
     font-size: 0.8125rem;
+  }
+
+  &__drawer {
+    margin-right: 1rem;
   }
 }

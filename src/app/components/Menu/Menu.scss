@@ -1,0 +1,93 @@
+.menu {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+
+  &__nav-drawer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 15rem;
+  }
+
+  &__menu-toggle {
+    background: none;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  &__drawer {
+    position: fixed;
+    top: 0;
+    left: -15rem;
+    width: 15rem;
+    height: 100%;
+    background-color: #000000;
+    color: white;
+    transition: left 0.3s ease;
+    padding: 0 8rem 0 0;
+    z-index: 1000;
+    opacity: 0.9;
+  }
+
+  &--open {
+    left: 0;
+  }
+
+  &__close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 1rem 0 1rem;
+    transition: ease-in-out 0.3s;
+  }
+
+  &__close-btn:hover {
+    opacity: 0.8;
+  }
+
+  &__drawer ul {
+    list-style-type: none;
+    width: max-content;
+    flex-direction: column;
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  &__drawer li {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    padding: 0.4rem 3rem 0.4rem 0.6rem;
+  }
+
+  &__drawer a {
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    transition: ease-in-out 0.3s;
+  }
+
+  &__drawer a:hover {
+    opacity: 0.8;
+  }
+
+  &--active {
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    transition: ease-in-out 0.3s;
+    border-radius: 0.6rem;
+  }
+
+  &--active:hover {
+    opacity: 0.8;
+  }
+}

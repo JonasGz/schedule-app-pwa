@@ -1,7 +1,11 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { addTask, getTasks } from "../public/utils/indexedDb";
-import { getTasksFromFirestore } from "../public/utils/firebase";
+import {
+  auth,
+  getTasksFromFirestore,
+  addTaskToFirestore,
+} from "../public/utils/firebase";
 
 const TaskContext = createContext();
 
@@ -10,6 +14,7 @@ export const useTask = () => useContext(TaskContext);
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [att, setAtt] = useState(0);
+  const [currentUser, setCurrentUser] = useState(auth.currentUser);
 
   function filterTasks(tasksFromDB) {
     const timeToMilliseconds = (taskTime) => {
@@ -28,7 +33,7 @@ export const TaskProvider = ({ children }) => {
       const diffB = Math.abs(
         timeToMilliseconds(b.taskTime) - nowInMilliseconds
       );
-      return diffA - diffB; // Ordenar pela menor diferença
+      return diffA - diffB;
     });
   }
 
@@ -41,6 +46,7 @@ export const TaskProvider = ({ children }) => {
       mergedTasks.map(async (task) => {
         try {
           await addTask(task);
+          await addTaskToFirestore(task);
         } catch (error) {
           console.error(
             "Erro ao adicionar tarefa durante a sincronização:",
@@ -59,7 +65,6 @@ export const TaskProvider = ({ children }) => {
 
       if (navigator.onLine) {
         const tasksFromFirestore = await getTasksFromFirestore();
-        console.log("load feito");
         syncTasks(tasksFromDB, tasksFromFirestore);
       } else {
         filterTasks(tasksFromDB);
@@ -71,8 +76,18 @@ export const TaskProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadTasks();
-  }, [att]);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      loadTasks();
+    }
+  }, [att, currentUser]);
 
   return (
     <TaskContext.Provider value={{ tasks, setAtt }}>

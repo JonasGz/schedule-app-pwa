@@ -13,6 +13,8 @@ import {
   getDocs,
   doc,
   deleteDoc,
+  update,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -74,6 +76,7 @@ export const getTasksFromFirestore = async () => {
   try {
     const user = auth.currentUser;
     const userid = user.uid;
+
     const userDocRef = doc(db, "users", userid);
     const tasksCollectionRef = collection(userDocRef, "tasks");
     const querySnapshot = await getDocs(tasksCollectionRef);
@@ -84,6 +87,36 @@ export const getTasksFromFirestore = async () => {
   } catch (error) {
     console.error("Erro ao obter tarefas do Firestore:", error);
     return [];
+  }
+};
+
+export const concludedTaskFirestore = async (taskId) => {
+  try {
+    const user = auth.currentUser;
+    const userid = user.uid;
+
+    const stringId = String(taskId);
+    const userDocRef = doc(db, "users", userid);
+    const tasksCollectionRef = collection(userDocRef, "tasks");
+    const tasksDocRef = doc(tasksCollectionRef, stringId);
+    await updateDoc(tasksDocRef, { completed: true });
+  } catch (error) {
+    console.error("Erro ao completar task", error);
+  }
+};
+
+export const notConludedTaksFirestore = async (taskId) => {
+  try {
+    const user = auth.currentUser;
+    const userid = user.uid;
+
+    const stringId = String(taskId);
+    const userDocRef = doc(db, "users", userid);
+    const tasksCollectionRef = collection(userDocRef, "tasks");
+    const tasksDocRef = doc(tasksCollectionRef, stringId);
+    await updateDoc(tasksDocRef, { completed: false });
+  } catch (error) {
+    console.error("Erro ao descompletar task", error);
   }
 };
 

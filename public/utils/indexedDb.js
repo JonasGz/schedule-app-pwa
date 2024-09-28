@@ -88,7 +88,7 @@ export const getTasks = async () => {
   }
 };
 
-export const concludedTask = async (key) => {
+export const concludedTaskIndexedDB = async (key) => {
   try {
     const db = await openIndexedDB();
     const transaction = db.transaction(["tasks"], "readwrite");
@@ -104,7 +104,7 @@ export const concludedTask = async (key) => {
           const updateRequest = store.put(newObj);
 
           updateRequest.onsuccess = () => {
-            resolve(newObj);
+            resolve();
           };
 
           updateRequest.onerror = (event) => {
@@ -145,7 +145,7 @@ export const notConcludedTask = async (key) => {
           const updateRequest = store.put(newObj);
 
           updateRequest.onsuccess = () => {
-            resolve(newObj);
+            resolve();
           };
 
           updateRequest.onerror = (event) => {

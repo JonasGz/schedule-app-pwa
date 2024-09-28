@@ -5,25 +5,29 @@ import { IoCloseCircle } from "react-icons/io5";
 import { MdOutlineRemoveCircle } from "react-icons/md";
 import "./Tile.scss";
 import {
-  getTasks,
-  openIndexedDB,
   removeTask,
-  concludedTask,
   notConcludedTask,
+  concludedTaskIndexedDB,
 } from "../../../../public/utils/indexedDb";
 import { useTask } from "../../../../contexts/TaskContext";
-import { removeTaskFromFirestore } from "../../../../public/utils/firebase";
+import {
+  concludedTaskFirestore,
+  notConludedTaksFirestore,
+  removeTaskFromFirestore,
+} from "../../../../public/utils/firebase";
 
 const Tile = ({ title, time, completed, id }) => {
   const { setAtt } = useTask();
 
   const completedTask = (id) => {
-    concludedTask(id);
+    concludedTaskIndexedDB(id);
+    concludedTaskFirestore(id);
     setAtt((a) => a + 1);
   };
 
   const notCompletedTask = (id) => {
     notConcludedTask(id);
+    notConludedTaksFirestore(id);
     setAtt((a) => a + 1);
   };
 

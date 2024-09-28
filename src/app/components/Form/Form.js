@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import "./Form.scss";
 import { signUp, signIn } from "../../../../public/utils/firebase";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../../../contexts/AuthContext";
+import { getAuth } from "firebase/auth";
 
 const Form = ({ type }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const user = getAuth();
 
   function changeName(e) {
     setName(e.target.value);
@@ -20,14 +23,23 @@ const Form = ({ type }) => {
     setPassword(e.target.value);
   }
 
-  function handleSignUp(e) {
+  async function handleSignUp(e) {
     e.preventDefault();
-    signUp(email, password, name);
+    try {
+      await signUp(email, password, name);
+    } catch (error) {
+      console.error("Erro ao se registrar", error);
+    }
   }
 
-  function handleSignIn(e) {
+  async function handleSignIn(e) {
     e.preventDefault();
-    signIn(email, password);
+    try {
+      await signIn(email, password);
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Erro ao logar", error);
+    }
   }
 
   return type === "login" ? (

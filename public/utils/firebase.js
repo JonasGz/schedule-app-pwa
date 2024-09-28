@@ -36,9 +36,13 @@ export const addTaskToFirestore = async (task) => {
       if (Object.keys(task).length === 0) {
         throw new Error("O objeto de tarefa está vazio.");
       }
+      const user = auth.currentUser;
+      const userid = user.uid;
       const stringId = String(task.id);
-      const docRef = await doc(db, "tasks", stringId);
-      await setDoc(docRef, task);
+      const userDocRef = doc(db, "users", userid);
+      const tasksCollectionRef = collection(userDocRef, "tasks");
+      const taskDocRef = doc(tasksCollectionRef, stringId);
+      await setDoc(taskDocRef, task);
       console.log("Documento criado ou atualizado com ID específico.");
     } else {
       throw new Error(
@@ -52,9 +56,14 @@ export const addTaskToFirestore = async (task) => {
 
 export const removeTaskFromFirestore = async (taskId) => {
   try {
+    const user = auth.currentUser;
+    const userid = user.uid;
+
     const stringId = String(taskId);
-    const taskRef = doc(db, "tasks", stringId);
-    await deleteDoc(taskRef);
+    const userDocRef = doc(db, "users", userid);
+    const tasksCollectionRef = collection(userDocRef, "tasks");
+    const tasksDocRef = doc(tasksCollectionRef, stringId);
+    await deleteDoc(tasksDocRef);
     console.log(`Documento com ID ${taskId} removido com sucesso.`);
   } catch (error) {
     console.error("Erro ao remover o documento:", error);
@@ -63,7 +72,11 @@ export const removeTaskFromFirestore = async (taskId) => {
 
 export const getTasksFromFirestore = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, "tasks"));
+    const user = auth.currentUser;
+    const userid = user.uid;
+    const userDocRef = doc(db, "users", userid);
+    const tasksCollectionRef = collection(userDocRef, "tasks");
+    const querySnapshot = await getDocs(tasksCollectionRef);
     return querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -82,8 +95,22 @@ export const signUp = async (email, password, displayName) => {
       password
     );
     const user = userCredential.user;
+    const userid = user.uid;
 
     await updateProfile(user, { displayName });
+
+    if (user) {
+      try {
+        const docRef = doc(db, "users", userid);
+        const newUser = {
+          username: user.displayName,
+          email: user.email,
+        };
+        await setDoc(docRef, newUser);
+      } catch (error) {
+        console.error("Erro ao salvar usuário no Firestore", error);
+      }
+    }
 
     return user;
   } catch (error) {

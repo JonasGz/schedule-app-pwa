@@ -1,3 +1,5 @@
+import { auth } from "./firebase";
+
 export const openIndexedDB = () => {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open("my-tasks-db", 1);
@@ -8,8 +10,14 @@ export const openIndexedDB = () => {
 
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
+      let store;
       if (!db.objectStoreNames.contains("tasks")) {
-        db.createObjectStore("tasks", { keyPath: "id" });
+        store = db.createObjectStore("tasks", { keyPath: "id" });
+      } else {
+        store = event.target.transaction.objectStore("tasks");
+      }
+      if (!store.indexNames.contains("userId")) {
+        store.createIndex("userId", "userId", { unique: false });
       }
     };
 
@@ -21,6 +29,8 @@ export const openIndexedDB = () => {
 
 export const addTask = async (task) => {
   try {
+    const user = auth.currentUser;
+    const userId = user.uid;
     const db = await openIndexedDB();
     const transaction = db.transaction(["tasks"], "readwrite");
     const store = transaction.objectStore("tasks");
@@ -30,7 +40,8 @@ export const addTask = async (task) => {
     }
 
     return new Promise((resolve, reject) => {
-      const request = store.put(task);
+      const taskWithUserId = { ...task, userId: userId };
+      const request = store.put(taskWithUserId);
 
       request.onsuccess = () => {
         resolve();
@@ -51,18 +62,21 @@ export const addTask = async (task) => {
 
 export const getTasks = async () => {
   try {
+    const user = auth.currentUser;
+    const userid = user.uid;
     const db = await openIndexedDB();
     const transaction = db.transaction(["tasks"], "readonly");
     const store = transaction.objectStore("tasks");
+    const index = store.index("userId");
 
     return new Promise((resolve, reject) => {
-      const request = store.getAll();
+      const useTasksRequest = index.getAll(userid);
 
-      request.onsuccess = (event) => {
+      useTasksRequest.onsuccess = (event) => {
         resolve(event.target.result);
       };
 
-      request.onerror = (event) => {
+      useTasksRequest.onerror = (event) => {
         reject(
           `Erro ao buscar tarefas do IndexedDB: ${event.target.errorCode}`
         );

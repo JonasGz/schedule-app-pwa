@@ -5,18 +5,14 @@ import { useRouter, usePathname } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { MdAddBox } from "react-icons/md";
-import { IoMdList } from "react-icons/io";
 import { IoLogIn } from "react-icons/io5";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { FaHome } from "react-icons/fa";
-import { useAuth } from "../../../../contexts/AuthContext";
 import Link from "next/link";
 import { logout } from "../../../../public/utils/firebase";
-// import { Transition } from "../Transition/Transition";
 
 function HamburgerMenu() {
   const auth = getAuth();
-  const { logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const menuRef = useRef(null);
@@ -82,7 +78,7 @@ function HamburgerMenu() {
             ×
           </button>
           <button onClick={handleLogout} className="menu__close-btn">
-            <RiLogoutBoxLine size={20} />
+            <RiLogoutBoxLine size={22} />
           </button>
         </div>
         {!user ? (

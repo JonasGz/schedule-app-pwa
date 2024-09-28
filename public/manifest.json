@@ -1,7 +1,7 @@
 {
   "name": "Schedule App",
-  "short_name": "ScheduleApp",
   "description": "Um app de agenda de tarefas",
+  "short_name": "ScheduleApp",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -26,21 +26,21 @@
       "purpose": "any"
     }
   ],
-  // "screenshots": [
-  //   {
-  //     "src": "/screenshots/screenshot1.png",
-  //     "sizes": "640x480",
-  //     "type": "image/png",
-  //     "label": "Tela Inicial",
-  //     "form_factor": "wide"
-  //   },
-  //   {
-  //     "src": "/screenshots/screenshot2.png",
-  //     "sizes": "1280x720",
-  //     "type": "image/png",
-  //     "label": "Tela de tarefas"
-  //   }
-  // ],
+  "screenshots": [
+    {
+      "src": "/screenshots/tasks-mobile.png",
+      "sizes": "491x723",
+      "type": "image/png",
+      "label": "Tela Inicial",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/tasks-desktop.png",
+      "sizes": "1183x721",
+      "type": "image/png",
+      "label": "Tela de tarefas"
+    }
+  ],
   "scope": "/",
   "orientation": "portrait"
 }

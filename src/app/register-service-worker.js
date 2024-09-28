@@ -8,7 +8,6 @@ const RegisterServiceWorker = () => {
       navigator.serviceWorker
         .register("/service-worker.js")
         .then((registration) => {
-          console.log("Service worker registered: ", registration);
           return navigator.serviceWorker.ready;
         })
         .then((registration) => {

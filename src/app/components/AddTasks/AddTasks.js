@@ -4,10 +4,12 @@ import "./AddTasks.scss";
 import { IoMdAddCircle } from "react-icons/io";
 import { addTask } from "../../../../public/utils/indexedDb";
 import { addTaskToFirestore } from "../../../../public/utils/firebase";
+import { parseISO, format } from "date-fns";
 
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("");
+  const [taskDate, setTaskDate] = useState("");
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -15,43 +17,67 @@ const AddTasks = ({ setAtt }) => {
   function changeTaskTime(e) {
     setTaskTime(e.target.value);
   }
+  function changeTaskDate(e) {
+    setTaskDate(e.target.value);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const newDate = new Date(taskDate).toLocaleDateString("pt-br");
+    console.log("this is newdate", newDate);
+
     const newTask = {
       id: Date.now(),
       taskName,
       taskTime,
+      newDate,
     };
 
-    try {
-      await addTask(newTask);
-      setAtt((a) => a + 1);
-      if (navigator.onLine) {
-        await addTaskToFirestore(newTask);
+    if (newTask) {
+      try {
+        await addTask(newTask);
         setAtt((a) => a + 1);
+        if (navigator.onLine) {
+          await addTaskToFirestore(newTask);
+          setAtt((a) => a + 1);
+        }
+      } catch (error) {
+        console.error("Erro ao adicionar nova tarefa:", error);
       }
-    } catch (error) {
-      console.error("Erro ao adicionar nova tarefa:", error);
+    } else {
+      console.log("Sem NewTask");
     }
   }
   return (
     <form onSubmit={handleSubmit} className="add-tasks">
-      <input
-        className="add-tasks__input"
-        type="text"
-        name="title"
-        placeholder="Reunião X"
-        onChange={changeTaskName}
-        value={taskName}
-      />
-      <input
-        className="add-tasks__input"
-        type="time"
-        name="time"
-        onChange={changeTaskTime}
-        value={taskTime}
-      />
+      <div className="add-tasks__inputs">
+        <input
+          className="add-tasks__input"
+          type="text"
+          name="title"
+          placeholder="Reunião X"
+          onChange={changeTaskName}
+          value={taskName}
+        />
+        <div className="add-tasks__date-time">
+          <input
+            className="add-tasks__input"
+            type="time"
+            name="time"
+            onChange={changeTaskTime}
+            value={taskTime}
+          />
+          <input
+            className="add-tasks__input"
+            type="date"
+            name="date"
+            min="2024-10-02"
+            onChange={changeTaskDate}
+            value={taskDate}
+          />
+        </div>
+      </div>
       <button className="add-tasks__button">
         <IoMdAddCircle size={46} fill="#502F7E" />
       </button>

@@ -17,24 +17,12 @@ export const TaskProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
 
   function filterTasks(tasksFromDB) {
-    const timeToMilliseconds = (taskTime) => {
-      const [hours, minutes] = taskTime.split(":").map(Number);
-      return hours * 60 * 60 * 1000 + minutes * 60 * 1000; // Converter horas e minutos para ms
-    };
-
-    const now = new Date();
-    const nowInMilliseconds =
-      now.getHours() * 60 * 60 * 1000 + now.getMinutes() * 60 * 1000;
-
-    tasksFromDB.sort((a, b) => {
-      const diffA = Math.abs(
-        timeToMilliseconds(a.taskTime) - nowInMilliseconds
-      );
-      const diffB = Math.abs(
-        timeToMilliseconds(b.taskTime) - nowInMilliseconds
-      );
-      return diffA - diffB;
+    const currentDate = new Date().toISOString().split("T")[0];
+    console.log(currentDate);
+    const tasksToday = tasksFromDB.filter((task) => {
+      return (task.taskDate = currentDate);
     });
+    setTasks(tasksToday);
   }
 
   async function syncTasks(tasksFromDB, tasksFromFirestore) {
@@ -56,7 +44,7 @@ export const TaskProvider = ({ children }) => {
       })
     );
     filterTasks(mergedTasks);
-    setTasks(mergedTasks);
+    // setTasks(mergedTasks);
   }
 
   const loadTasks = async () => {

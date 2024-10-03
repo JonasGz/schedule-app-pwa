@@ -1,11 +1,25 @@
 "use client";
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import "./List.scss";
 import Tile from "../Tile/Tile";
 
 const List = ({ concluded, tasks }) => {
+  const [tasksToday, setTasksToday] = useState("");
   const completedTasks = tasks.filter((task) => task.completed);
   const toDoTasks = tasks.filter((task) => !task.completed);
+
+  // function todayTasks(tasks) {
+  //   const currentDate = new Date().toISOString().split("T")[0];
+  //   console.log(currentDate);
+  //   const todayTasks = tasks.filter((task) => {
+  //     return (task.taskDate = currentDate);
+  //   });
+  //   setTasksToday(todayTasks);
+  // }
+
+  // useEffect(() => {
+  //   tasksToday(tasks);
+  // }, [tasks]);
 
   return concluded ? (
     <ul className="list">
@@ -15,6 +29,7 @@ const List = ({ concluded, tasks }) => {
           id={task.id}
           title={task.taskName}
           time={task.taskTime}
+          date={task.taskDate}
           completed={true}
         />
       ))}
@@ -27,6 +42,7 @@ const List = ({ concluded, tasks }) => {
           id={task.id}
           title={task.taskName}
           time={task.taskTime}
+          date={task.taskDate}
           completed={false}
         />
       ))}

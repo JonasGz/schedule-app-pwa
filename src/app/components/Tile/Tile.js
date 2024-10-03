@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { IoCloseCircle } from "react-icons/io5";
 import { MdOutlineRemoveCircle } from "react-icons/md";
@@ -16,8 +16,9 @@ import {
   removeTaskFromFirestore,
 } from "../../../../public/utils/firebase";
 
-const Tile = ({ title, time, completed, id }) => {
+const Tile = ({ title, time, completed, id, date }) => {
   const { setAtt } = useTask();
+  const [data, setData] = useState(date.split("-"));
 
   const completedTask = (id) => {
     concludedTaskIndexedDB(id);
@@ -54,7 +55,9 @@ const Tile = ({ title, time, completed, id }) => {
   ) : (
     <li className="tile">
       <div className="tile__title">{title}</div>
-      <div className="tile__subtitle">{time}</div>
+      <div className="tile__subtitle">
+        {time}h - {data[2]}/{data[1]}/{data[0]}
+      </div>
       <div className="tile__icon">
         <BsCheckCircleFill
           onClick={() => completedTask(id)}

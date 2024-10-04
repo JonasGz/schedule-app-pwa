@@ -16,14 +16,14 @@ export const TaskProvider = ({ children }) => {
   const [att, setAtt] = useState(0);
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
 
-  function filterTasks(tasksFromDB) {
-    const currentDate = new Date().toISOString().split("T")[0];
-    console.log(currentDate);
-    const tasksToday = tasksFromDB.filter((task) => {
-      return (task.taskDate = currentDate);
-    });
-    setTasks(tasksToday);
-  }
+  // function filterTasks(tasksFromDB) {
+  //   const currentDate = new Date().toISOString().split("T")[0];
+  //   console.log(currentDate);
+  //   const tasksToday = tasksFromDB.filter((task) => {
+  //     return (task.taskDate = currentDate);
+  //   });
+  //   setTasks(tasksToday);
+  // }
 
   async function syncTasks(tasksFromDB, tasksFromFirestore) {
     const tasksMap = new Map();
@@ -43,8 +43,8 @@ export const TaskProvider = ({ children }) => {
         }
       })
     );
-    filterTasks(mergedTasks);
-    // setTasks(mergedTasks);
+    // filterTasks(mergedTasks);
+    setTasks(mergedTasks);
   }
 
   const loadTasks = async () => {
@@ -55,7 +55,7 @@ export const TaskProvider = ({ children }) => {
         const tasksFromFirestore = await getTasksFromFirestore();
         syncTasks(tasksFromDB, tasksFromFirestore);
       } else {
-        filterTasks(tasksFromDB);
+        // filterTasks(tasksFromDB);
         setTasks(tasksFromDB);
       }
     } catch (error) {

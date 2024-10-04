@@ -4,22 +4,34 @@ import "./List.scss";
 import Tile from "../Tile/Tile";
 
 const List = ({ concluded, tasks }) => {
-  const [tasksToday, setTasksToday] = useState("");
+  const [tasksFuture, setTasksFuture] = useState([]);
+  const [tasksToday, setTasksToday] = useState([]);
+  const [tasksPasseds, setTasksPasseds] = useState([]);
+
   const completedTasks = tasks.filter((task) => task.completed);
   const toDoTasks = tasks.filter((task) => !task.completed);
 
-  // function todayTasks(tasks) {
-  //   const currentDate = new Date().toISOString().split("T")[0];
-  //   console.log(currentDate);
-  //   const todayTasks = tasks.filter((task) => {
-  //     return (task.taskDate = currentDate);
-  //   });
-  //   setTasksToday(todayTasks);
-  // }
+  function filterTasks(tasks) {
+    const currentDate = new Date().toLocaleDateString("pt-br");
 
-  // useEffect(() => {
-  //   tasksToday(tasks);
-  // }, [tasks]);
+    const futureTasks = tasks.filter((task) => {
+      return task.taskDate > currentDate;
+    });
+    const todayTasks = tasks.filter((task) => {
+      return task.taskDate === currentDate;
+    });
+    const passedTasks = tasks.filter((task) => {
+      return task.taskDate < currentDate;
+    });
+
+    setTasksFuture(futureTasks);
+    setTasksToday(todayTasks);
+    setTasksPasseds(passedTasks);
+  }
+
+  useEffect(() => {
+    filterTasks(tasks);
+  }, [tasks]);
 
   return concluded ? (
     <ul className="list">
@@ -36,16 +48,45 @@ const List = ({ concluded, tasks }) => {
     </ul>
   ) : (
     <ul className="list">
-      {toDoTasks.map((task) => (
-        <Tile
-          key={task.id}
-          id={task.id}
-          title={task.taskName}
-          time={task.taskTime}
-          date={task.taskDate}
-          completed={false}
-        />
-      ))}
+      <h2>Future</h2>
+      {tasksFuture &&
+        tasksFuture.map((task) => (
+          <Tile
+            key={task.id}
+            id={task.id}
+            title={task.taskName}
+            time={task.taskTime}
+            date={task.taskDate}
+            completed={false}
+          />
+        ))}
+
+      <h2>Today</h2>
+
+      {tasksToday &&
+        tasksToday.map((task) => (
+          <Tile
+            key={task.id}
+            id={task.id}
+            title={task.taskName}
+            time={task.taskTime}
+            date={task.taskDate}
+            completed={false}
+          />
+        ))}
+      <h2>Passeds</h2>
+
+      {tasksPasseds &&
+        tasksPasseds.map((task) => (
+          <Tile
+            key={task.id}
+            id={task.id}
+            title={task.taskName}
+            time={task.taskTime}
+            date={task.taskDate}
+            completed={false}
+          />
+        ))}
     </ul>
   );
 };

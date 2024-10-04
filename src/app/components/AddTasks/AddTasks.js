@@ -4,7 +4,6 @@ import "./AddTasks.scss";
 import { IoMdAddCircle } from "react-icons/io";
 import { addTask } from "../../../../public/utils/indexedDb";
 import { addTaskToFirestore } from "../../../../public/utils/firebase";
-import { parseISO, format } from "date-fns";
 
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
@@ -24,29 +23,39 @@ const AddTasks = ({ setAtt }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const newDate = new Date(taskDate).toLocaleDateString("pt-br");
-    console.log("this is newdate", newDate);
-
-    const newTask = {
-      id: Date.now(),
-      taskName,
-      taskTime,
-      newDate,
-    };
-
-    if (newTask) {
-      try {
-        await addTask(newTask);
-        setAtt((a) => a + 1);
-        if (navigator.onLine) {
-          await addTaskToFirestore(newTask);
-          setAtt((a) => a + 1);
-        }
-      } catch (error) {
-        console.error("Erro ao adicionar nova tarefa:", error);
+    try {
+      let newDate = taskDate;
+      if (taskDate) {
+        const [year, month, day] = taskDate.split("-");
+        const correctDate = new Date(year, month - 1, day, 12);
+        newDate = correctDate.toLocaleDateString("pt-br");
       }
-    } else {
-      console.log("Sem NewTask");
+
+      if (newDate && taskTime && taskName) {
+        const newTask = {
+          id: Date.now(),
+          taskName,
+          taskTime,
+          taskDate: newDate,
+        };
+
+        if (newTask) {
+          try {
+            await addTask(newTask);
+            setAtt((a) => a + 1);
+            if (navigator.onLine) {
+              await addTaskToFirestore(newTask);
+              setAtt((a) => a + 1);
+            }
+          } catch (error) {
+            console.error("Erro ao adicionar nova tarefa:", error);
+          }
+        } else {
+          console.log("Sem NewTask");
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
   return (

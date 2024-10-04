@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { IoCloseCircle } from "react-icons/io5";
 import { MdOutlineRemoveCircle } from "react-icons/md";
@@ -18,17 +18,16 @@ import {
 
 const Tile = ({ title, time, completed, id, date }) => {
   const { setAtt } = useTask();
-  const [data, setData] = useState(date.split("-"));
 
-  const completedTask = (id) => {
-    concludedTaskIndexedDB(id);
-    concludedTaskFirestore(id);
+  const completedTask = async (id) => {
+    await concludedTaskIndexedDB(id);
+    await concludedTaskFirestore(id);
     setAtt((a) => a + 1);
   };
 
-  const notCompletedTask = (id) => {
-    notConcludedTask(id);
-    notConludedTaksFirestore(id);
+  const notCompletedTask = async (id) => {
+    await notConcludedTask(id);
+    await notConludedTaksFirestore(id);
     setAtt((a) => a + 1);
   };
 
@@ -56,7 +55,7 @@ const Tile = ({ title, time, completed, id, date }) => {
     <li className="tile">
       <div className="tile__title">{title}</div>
       <div className="tile__subtitle">
-        {time}h - {data[2]}/{data[1]}/{data[0]}
+        {time}h - {date}
       </div>
       <div className="tile__icon">
         <BsCheckCircleFill

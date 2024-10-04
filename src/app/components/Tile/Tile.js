@@ -16,7 +16,7 @@ import {
   removeTaskFromFirestore,
 } from "../../../../public/utils/firebase";
 
-const Tile = ({ title, time, completed, id, date }) => {
+const Tile = ({ title, time, completed, id, date, passed }) => {
   const { setAtt } = useTask();
 
   const completedTask = async (id) => {
@@ -47,6 +47,25 @@ const Tile = ({ title, time, completed, id, date }) => {
         <IoCloseCircle
           onClick={() => notCompletedTask(id)}
           fill="#fff"
+          size={38}
+        />
+      </div>
+    </li>
+  ) : passed ? (
+    <li className="tile tile--passed">
+      <div className="tile__title">{title}</div>
+      <div className="tile__subtitle">
+        {time}h - {date}
+      </div>
+      <div className="tile__icon">
+        <BsCheckCircleFill
+          onClick={() => completedTask(id)}
+          fill="#502F7E"
+          size={32}
+        />
+        <MdOutlineRemoveCircle
+          onClick={() => deleteTask(id)}
+          fill="#BB271A"
           size={38}
         />
       </div>

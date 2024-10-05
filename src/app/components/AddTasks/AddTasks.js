@@ -82,7 +82,6 @@ const AddTasks = ({ setAtt }) => {
             className="add-tasks__input add-tasks__input-date-time"
             type="date"
             name="date"
-            placeholder="05/10/2024"
             onChange={changeTaskDate}
             value={taskDate}
           />

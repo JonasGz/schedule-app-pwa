@@ -47,7 +47,7 @@ const Tile = ({ title, time, completed, id, date, passed }) => {
         <IoCloseCircle
           onClick={() => notCompletedTask(id)}
           fill="#fff"
-          size={38}
+          size={28}
         />
       </div>
     </li>
@@ -61,12 +61,12 @@ const Tile = ({ title, time, completed, id, date, passed }) => {
         <BsCheckCircleFill
           onClick={() => completedTask(id)}
           fill="#502F7E"
-          size={32}
+          size={28}
         />
         <MdOutlineRemoveCircle
           onClick={() => deleteTask(id)}
           fill="#BB271A"
-          size={38}
+          size={34}
         />
       </div>
     </li>
@@ -80,12 +80,12 @@ const Tile = ({ title, time, completed, id, date, passed }) => {
         <BsCheckCircleFill
           onClick={() => completedTask(id)}
           fill="#502F7E"
-          size={32}
+          size={28}
         />
         <MdOutlineRemoveCircle
           onClick={() => deleteTask(id)}
           fill="#BB271A"
-          size={38}
+          size={34}
         />
       </div>
     </li>

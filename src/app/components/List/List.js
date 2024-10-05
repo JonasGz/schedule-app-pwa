@@ -92,7 +92,7 @@ const List = ({ concluded, tasks }) => {
     </ul>
   ) : (
     <ul className="list">
-      <h2>Future</h2>
+      <h3 className="list__title">Future</h3>
       {tasksFuture &&
         tasksFuture.map((task) => (
           <Tile
@@ -105,7 +105,7 @@ const List = ({ concluded, tasks }) => {
           />
         ))}
 
-      <h2>Today</h2>
+      <h3 className="list__title">Today</h3>
 
       {tasksToday &&
         tasksToday.map((task) => (
@@ -130,7 +130,7 @@ const List = ({ concluded, tasks }) => {
             passed={true}
           />
         ))}
-      <h2>Passeds</h2>
+      <h3 className="list__title">Passeds</h3>
 
       {tasksPasseds &&
         tasksPasseds.map((task) => (
@@ -141,6 +141,7 @@ const List = ({ concluded, tasks }) => {
             time={task.taskTime}
             date={task.taskDate}
             completed={false}
+            passed={true}
           />
         ))}
     </ul>

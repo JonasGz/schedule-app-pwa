@@ -4,8 +4,32 @@
   list-style-type: none;
   gap: 1rem;
   width: 100%;
+  max-height: 80%;
+  overflow-x: auto;
+  padding: 1rem;
+
+  &__title {
+    color: rgb(168, 168, 168);
+  }
 }
 
-.passed {
-  opacity: 0.6;
+/* width */
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0.8rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #9985b4;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #75589c;
 }

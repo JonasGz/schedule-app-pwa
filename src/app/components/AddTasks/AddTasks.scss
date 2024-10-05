@@ -38,20 +38,6 @@
     width: 10rem;
   }
 
-  @media (max-width: 768px) {
-    // @supports (-webkit-overflow-scrolling: touch) {
-    //   &__input[type="date"]::before {
-    //     color: #707070;
-    //     content: attr(placeholder);
-    //   }
-    //   &__input[type="date"]::after {
-    //     color: #ccc;
-    //     content: "" !important;
-    //     display: none;
-    //   }
-    // }
-  }
-
   &__input:hover {
     outline: #a98ed1 0.1rem solid;
   }

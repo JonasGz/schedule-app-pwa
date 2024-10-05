@@ -7,8 +7,8 @@ import { addTaskToFirestore } from "../../../../public/utils/firebase";
 
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
-  const [taskTime, setTaskTime] = useState("");
-  const [taskDate, setTaskDate] = useState("");
+  const [taskTime, setTaskTime] = useState("11:11");
+  const [taskDate, setTaskDate] = useState("05/10/2024");
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -81,7 +81,6 @@ const AddTasks = ({ setAtt }) => {
             className="add-tasks__input"
             type="date"
             name="date"
-            min="2024-10-02"
             onChange={changeTaskDate}
             value={taskDate}
           />

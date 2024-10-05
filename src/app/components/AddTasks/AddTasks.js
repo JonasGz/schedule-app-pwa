@@ -9,6 +9,7 @@ const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("11:11");
   const [taskDate, setTaskDate] = useState("");
+  const [calendar, setCalendar] = useState(false);
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -20,10 +21,15 @@ const AddTasks = ({ setAtt }) => {
     setTaskDate(e.target.value);
   }
 
+  function toggleDate() {
+    setCalendar(true);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
+      setCalendar(false);
       let newDate = taskDate;
       if (taskDate) {
         const [year, month, day] = taskDate.split("-");
@@ -78,13 +84,17 @@ const AddTasks = ({ setAtt }) => {
             value={taskTime}
           />
 
-          <input
-            className="add-tasks__input add-tasks__input-date-time"
-            type="date"
-            name="date"
-            onChange={changeTaskDate}
-            value={taskDate}
-          />
+          {calendar ? (
+            <input
+              className="add-tasks__input add-tasks__input-date-time"
+              type="date"
+              name="date"
+              onChange={changeTaskDate}
+              value={taskDate}
+            />
+          ) : (
+            <button onClick={() => toggleDate()}>05/10/2024</button>
+          )}
         </div>
       </div>
       <button className="add-tasks__button">

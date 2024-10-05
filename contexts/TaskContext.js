@@ -18,24 +18,28 @@ export const TaskProvider = ({ children }) => {
 
   async function syncTasks(tasksFromDB, tasksFromFirestore) {
     try {
-      const tasksMap = new Map();
-      tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
-      tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
-      const mergedTasks = Array.from(tasksMap.values());
-      await Promise.all(
-        mergedTasks.map(async (task) => {
-          try {
-            await addTask(task);
-            await addTaskToFirestore(task);
-          } catch (error) {
-            console.error(
-              "Erro ao adicionar tarefa durante a sincronização:",
-              error
-            );
-          }
-        })
-      );
-      setTasks(mergedTasks);
+      if (tasksFromFirestore) {
+        const tasksMap = new Map();
+        tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
+        tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
+        const mergedTasks = Array.from(tasksMap.values());
+        await Promise.all(
+          mergedTasks.map(async (task) => {
+            try {
+              await addTask(task);
+              await addTaskToFirestore(task);
+            } catch (error) {
+              console.error(
+                "Erro ao adicionar tarefa durante a sincronização: ",
+                error
+              );
+            }
+          })
+        );
+        setTasks(mergedTasks);
+      } else {
+        setTasks(tasksFromDB);
+      }
     } catch (error) {
       console.error("Erro ao consultar Firestore ou IndexedDB", error);
     }
@@ -46,8 +50,16 @@ export const TaskProvider = ({ children }) => {
       const tasksFromDB = await getTasks();
 
       if (navigator.onLine) {
-        const tasksFromFirestore = await getTasksFromFirestore();
-        syncTasks(tasksFromDB, tasksFromFirestore);
+        try {
+          const tasksFromFirestore = await getTasksFromFirestore();
+          if (tasksFromFirestore) {
+            syncTasks(tasksFromDB, tasksFromFirestore);
+          } else {
+            syncTasks(tasksFromDB);
+          }
+        } catch (error) {
+          console.log("Erro ao recuperar as tasks do Firestore", error);
+        }
       } else {
         setTasks(tasksFromDB);
       }

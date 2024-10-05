@@ -8,8 +8,7 @@ import { addTaskToFirestore } from "../../../../public/utils/firebase";
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("11:11");
-  const [taskDate, setTaskDate] = useState("05/10/2024");
-  const [inputDate, setInputDate] = useState(false);
+  const [taskDate, setTaskDate] = useState("");
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -19,11 +18,6 @@ const AddTasks = ({ setAtt }) => {
   }
   function changeTaskDate(e) {
     setTaskDate(e.target.value);
-  }
-
-  function toggleInputDate() {
-    console.log("clicou");
-    setInputDate(true);
   }
 
   async function handleSubmit(e) {

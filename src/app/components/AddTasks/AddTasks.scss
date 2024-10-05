@@ -70,7 +70,7 @@
 
   &__add {
     filter: drop-shadow(0px 2px 4px #c5c5c5);
-    transition: transform 0.3s;
+    transition: transform 0.3s, fill 0.3s ease-in-out;
   }
 
   &__add:hover {

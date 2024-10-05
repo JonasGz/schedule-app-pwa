@@ -16,21 +16,32 @@ export default function Dashboard() {
     <PrivateRouter>
       <div className="dashboard">
         <Navbar title="DASHBOARD" subtitle="Welcome" />
-        <div className="dashboard__user">
-          <div className="dashboard__welcome">
-            <span className="dashboard__hello">Hello,</span>
-            <h3 className="dashboard__username">{name}</h3>
+        <div className="dashboard__content">
+          <div className="dashboard__user">
+            <div className="dashboard__welcome">
+              <span className="dashboard__hello">Hello,</span>
+              <h3 className="dashboard__username">{name}</h3>
+            </div>
+            <Image
+              className="dashboard__avatar"
+              src="/images/avatar.png"
+              width={129}
+              height={126}
+              alt="Avatar"
+            />
           </div>
-          <Image
-            src="/images/avatar.png"
-            width={129}
-            height={126}
-            alt="Avatar"
-          />
-        </div>
 
-        <div className="dashboard__tasks">
-          <List tasks={tasks} concluded={true} />
+          <Image
+            className="tasks__break"
+            src="/images/break.png"
+            width={91}
+            height={26}
+            alt="break"
+          />
+
+          <div className="dashboard__tasks">
+            <List tasks={tasks} concluded={true} />
+          </div>
         </div>
       </div>
     </PrivateRouter>

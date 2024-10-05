@@ -7,7 +7,6 @@ const List = ({ concluded, tasks }) => {
   const [tasksFuture, setTasksFuture] = useState([]);
   const [tasksToday, setTasksToday] = useState([]);
   const [tasksTodayPasseds, setTasksTodayPasseds] = useState([]);
-
   const [tasksPasseds, setTasksPasseds] = useState([]);
 
   const completedTasks = tasks.filter((task) => task.completed);
@@ -23,52 +22,54 @@ const List = ({ concluded, tasks }) => {
     return `${hours}:${minutes}`;
   }
 
-  function filterTasksTimeToday(tasks) {
-    const currentTime = getCurrentTime();
-    const filteredTasks = tasks.filter((task) => task.taskTime >= currentTime);
-
-    const sortedTasks = filteredTasks.sort((a, b) => {
-      const timeA = a.taskTime
-        .split(":")
-        .reduce((acc, time) => 60 * acc + +time);
-      const timeB = b.taskTime
-        .split(":")
-        .reduce((acc, time) => 60 * acc + +time);
-      const currentTimeInMinutes = currentTime
-        .split(":")
-        .reduce((acc, time) => 60 * acc + +time);
-
-      return (
-        Math.abs(timeA - currentTimeInMinutes) -
-        Math.abs(timeB - currentTimeInMinutes)
-      );
-    });
-
-    return sortedTasks;
-  }
-
   function filterTasks(tasks) {
     const currentDate = new Date().toLocaleDateString("pt-br");
     const currentTime = getCurrentTime();
 
     const futureTasks = tasks.filter((task) => {
-      return task.taskDate > currentDate;
+      return task.taskDate > currentDate && !task.completed;
     });
     const todayTasks = tasks.filter((task) => {
-      return task.taskDate === currentDate;
+      return task.taskDate === currentDate && !task.completed;
     });
+
+    function orderedTasksTodayTime(todayTasks) {
+      const nextTasks = todayTasks.filter(
+        (task) => task.taskTime >= currentTime
+      );
+      const sortedTasks = nextTasks.sort((a, b) => {
+        const timeA = a.taskTime
+          .split(":")
+          .reduce((acc, time) => 60 * acc + +time);
+        const timeB = b.taskTime
+          .split(":")
+          .reduce((acc, time) => 60 * acc + +time);
+        const currentTimeInMinutes = currentTime
+          .split(":")
+          .reduce((acc, time) => 60 * acc + +time);
+
+        return (
+          Math.abs(timeA - currentTimeInMinutes) -
+          Math.abs(timeB - currentTimeInMinutes)
+        );
+      });
+
+      return sortedTasks;
+    }
     const todayTasksPassed = todayTasks.filter((task) => {
-      return task.taskTime < currentTime;
+      return task.taskTime < currentTime && !task.completed;
     });
     const passedTasks = tasks.filter((task) => {
       return (
         task.taskDate < currentDate ||
-        (task.taskTime < currentTime && task.taskDate === currentDate)
+        (task.taskTime < currentTime &&
+          task.taskDate === currentDate &&
+          !task.completed)
       );
     });
 
     setTasksFuture(futureTasks);
-    setTasksToday(filterTasksTimeToday(todayTasks));
+    setTasksToday(orderedTasksTodayTime(todayTasks));
     setTasksTodayPasseds(todayTasksPassed);
     setTasksPasseds(passedTasks);
   }

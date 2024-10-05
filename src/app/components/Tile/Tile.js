@@ -42,9 +42,12 @@ const Tile = ({ title, time, completed, id, date, passed }) => {
   return completed ? (
     <li className="tile tile--completed">
       <div className="tile__title">{title}</div>
-      <div className="tile__subtitle">{time}</div>
+      <div className="tile__subtitle">
+        {time}h - {date}
+      </div>
       <div className="tile__icon">
         <IoCloseCircle
+          className="tile__button-not-completed"
           onClick={() => notCompletedTask(id)}
           fill="#fff"
           size={28}

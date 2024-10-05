@@ -16,35 +16,29 @@ export const TaskProvider = ({ children }) => {
   const [att, setAtt] = useState(0);
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
 
-  // function filterTasks(tasksFromDB) {
-  //   const currentDate = new Date().toISOString().split("T")[0];
-  //   console.log(currentDate);
-  //   const tasksToday = tasksFromDB.filter((task) => {
-  //     return (task.taskDate = currentDate);
-  //   });
-  //   setTasks(tasksToday);
-  // }
-
   async function syncTasks(tasksFromDB, tasksFromFirestore) {
-    const tasksMap = new Map();
-    tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
-    tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
-    const mergedTasks = Array.from(tasksMap.values());
-    await Promise.all(
-      mergedTasks.map(async (task) => {
-        try {
-          await addTask(task);
-          await addTaskToFirestore(task);
-        } catch (error) {
-          console.error(
-            "Erro ao adicionar tarefa durante a sincronização:",
-            error
-          );
-        }
-      })
-    );
-    // filterTasks(mergedTasks);
-    setTasks(mergedTasks);
+    try {
+      const tasksMap = new Map();
+      tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
+      tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
+      const mergedTasks = Array.from(tasksMap.values());
+      await Promise.all(
+        mergedTasks.map(async (task) => {
+          try {
+            await addTask(task);
+            await addTaskToFirestore(task);
+          } catch (error) {
+            console.error(
+              "Erro ao adicionar tarefa durante a sincronização:",
+              error
+            );
+          }
+        })
+      );
+      setTasks(mergedTasks);
+    } catch (error) {
+      console.error("Erro ao consultar Firestore ou IndexedDB", error);
+    }
   }
 
   const loadTasks = async () => {
@@ -55,7 +49,6 @@ export const TaskProvider = ({ children }) => {
         const tasksFromFirestore = await getTasksFromFirestore();
         syncTasks(tasksFromDB, tasksFromFirestore);
       } else {
-        // filterTasks(tasksFromDB);
         setTasks(tasksFromDB);
       }
     } catch (error) {

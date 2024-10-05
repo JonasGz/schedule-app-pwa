@@ -9,6 +9,7 @@ const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("11:11");
   const [taskDate, setTaskDate] = useState("05/10/2024");
+  const [inputDate, setInputDate] = useState(false);
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -18,6 +19,11 @@ const AddTasks = ({ setAtt }) => {
   }
   function changeTaskDate(e) {
     setTaskDate(e.target.value);
+  }
+
+  function toggleInputDate() {
+    console.log("clicou");
+    setInputDate(true);
   }
 
   async function handleSubmit(e) {
@@ -77,16 +83,17 @@ const AddTasks = ({ setAtt }) => {
             onChange={changeTaskTime}
             value={taskTime}
           />
-          <input
-            className="add-tasks__input add-tasks__input-date-time"
-            type="text"
-            placeholder="05/10/2024"
-            name="date"
-            onClick={(e) => (e.target.type = "date")}
-            onBlur={(e) => (e.target.type = "text")}
-            onChange={changeTaskDate}
-            value={taskDate}
-          />
+          {inputDate ? (
+            <input
+              className="add-tasks__input add-tasks__input-date-time"
+              type="date"
+              name="date"
+              onChange={changeTaskDate}
+              value={taskDate}
+            />
+          ) : (
+            <button onClick={() => toggleInputDate()}>05/10/2024</button>
+          )}
         </div>
       </div>
       <button className="add-tasks__button">

@@ -71,16 +71,19 @@ const AddTasks = ({ setAtt }) => {
         />
         <div className="add-tasks__date-time">
           <input
-            className="add-tasks__input"
+            className="add-tasks__input add-tasks__input-date-time"
             type="time"
             name="time"
             onChange={changeTaskTime}
             value={taskTime}
           />
           <input
-            className="add-tasks__input"
-            type="date"
+            className="add-tasks__input add-tasks__input-date-time"
+            type="text"
+            placeholder="05/10/2024"
             name="date"
+            onFocus={(e) => (e.target.type = "date")}
+            onBlur={(e) => (e.target.type = "text")}
             onChange={changeTaskDate}
             value={taskDate}
           />

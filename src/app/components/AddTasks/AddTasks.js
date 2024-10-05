@@ -88,7 +88,7 @@ const AddTasks = ({ setAtt }) => {
         </div>
       </div>
       <button className="add-tasks__button">
-        <IoMdAddCircle size={46} fill="#502F7E" />
+        <IoMdAddCircle className="add-tasks__add" size={46} fill="#502F7E" />
       </button>
     </form>
   );

@@ -59,11 +59,13 @@ const Tile = ({ title, time, completed, id, date, passed }) => {
       </div>
       <div className="tile__icon">
         <BsCheckCircleFill
+          className="tile__button-completed"
           onClick={() => completedTask(id)}
           fill="#502F7E"
           size={28}
         />
         <MdOutlineRemoveCircle
+          className="tile__button-remove"
           onClick={() => deleteTask(id)}
           fill="#BB271A"
           size={34}
@@ -78,11 +80,13 @@ const Tile = ({ title, time, completed, id, date, passed }) => {
       </div>
       <div className="tile__icon">
         <BsCheckCircleFill
+          className="tile__button-completed"
           onClick={() => completedTask(id)}
           fill="#502F7E"
           size={28}
         />
         <MdOutlineRemoveCircle
+          className="tile__button-remove"
           onClick={() => deleteTask(id)}
           fill="#BB271A"
           size={34}

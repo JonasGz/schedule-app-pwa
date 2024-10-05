@@ -5,12 +5,20 @@
   grid-template-rows: min-content 1fr;
 
   &__add-tasks {
-    width: 80%;
+    width: 100%;
+    padding: 1rem 0 1rem 0;
   }
 
   &__tasks {
-    width: 60%;
-    max-height: 60vh;
+    max-height: 55vh;
+    height: 100%;
+    width: 100%;
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 95%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   &__content {

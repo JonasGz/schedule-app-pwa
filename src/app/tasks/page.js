@@ -20,7 +20,13 @@ export default function Tasks() {
           <div className="tasks__add-tasks">
             <AddTasks setAtt={setAtt} />
           </div>
-          <Image src="/images/break.png" width={91} height={26} alt="break" />
+          <Image
+            className="tasks__break"
+            src="/images/break.png"
+            width={91}
+            height={26}
+            alt="break"
+          />
 
           <div className="tasks__tasks">
             <List tasks={tasks} setAtt={setAtt} />

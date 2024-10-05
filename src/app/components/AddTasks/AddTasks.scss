@@ -51,10 +51,6 @@
     }
   }
 
-  &__input[type="date"]:focus:after {
-    content: "" !important;
-  }
-
   &__input:hover {
     outline: #a98ed1 0.1rem solid;
   }

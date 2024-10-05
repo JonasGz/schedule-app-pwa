@@ -82,7 +82,7 @@ const AddTasks = ({ setAtt }) => {
             type="text"
             placeholder="05/10/2024"
             name="date"
-            onFocus={(e) => (e.target.type = "date")}
+            onClick={(e) => (e.target.type = "date")}
             onBlur={(e) => (e.target.type = "text")}
             onChange={changeTaskDate}
             value={taskDate}

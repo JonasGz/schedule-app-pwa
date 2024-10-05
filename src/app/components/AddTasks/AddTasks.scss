@@ -39,7 +39,7 @@
   }
 
   @media (max-width: 768px) {
-    @supports (-webkit-overflow-scroling: touch) {
+    @supports (-webkit-overflow-scrolling: touch) {
       &__input[type="date"]::before {
         color: #707070;
         content: attr(placeholder);

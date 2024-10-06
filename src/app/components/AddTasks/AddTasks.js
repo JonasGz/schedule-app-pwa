@@ -7,6 +7,8 @@ import { addTaskToFirestore } from "../../../../public/utils/firebase";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
+import "./DatePicker/DatePicker.scss";
+import "./DatePicker/Calendar/Calendar.scss";
 
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");

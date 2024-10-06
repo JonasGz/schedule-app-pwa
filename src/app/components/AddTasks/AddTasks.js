@@ -4,11 +4,15 @@ import "./AddTasks.scss";
 import { IoMdAddCircle } from "react-icons/io";
 import { addTask } from "../../../../public/utils/indexedDb";
 import { addTaskToFirestore } from "../../../../public/utils/firebase";
+import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
 
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("11:11");
   const [taskDate, setTaskDate] = useState("");
+  const [value, onChange] = useState(new Date());
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -79,13 +83,15 @@ const AddTasks = ({ setAtt }) => {
             value={taskTime}
           />
 
-          <input
+          <DatePicker onChange={onChange} value={value} />
+
+          {/* <input
             className="add-tasks__input add-tasks__input-date-time"
             type="date"
             name="date"
             onChange={changeTaskDate}
             value={taskDate}
-          />
+          /> */}
         </div>
       </div>
       <button className="add-tasks__button">

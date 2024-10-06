@@ -22,8 +22,7 @@ const AddTasks = ({ setAtt }) => {
     setTaskTime(e.target.value);
   }
   function changeTaskDate(e) {
-    const date = new Date(e).toLocaleDateString("pt-br");
-    setTaskDate(date);
+    setTaskDate(e);
   }
 
   async function handleSubmit(e) {
@@ -31,12 +30,13 @@ const AddTasks = ({ setAtt }) => {
 
     try {
       if (taskDate && taskTime && taskName) {
-        console.log(taskDate);
+        const date = new Date(taskDate);
+        const formattedDate = date.toLocaleDateString("pt-br");
         const newTask = {
           id: Date.now(),
           taskName,
           taskTime,
-          taskDate,
+          taskDate: formattedDate,
         };
 
         if (newTask) {
@@ -80,7 +80,8 @@ const AddTasks = ({ setAtt }) => {
 
           <DatePicker
             clearIcon={null}
-            format="MM/d/y"
+            locale="pt-BR"
+            format="dd/MM/y"
             onChange={changeTaskDate}
             value={taskDate}
           />

@@ -11,8 +11,7 @@ import "react-calendar/dist/Calendar.css";
 const AddTasks = ({ setAtt }) => {
   const [taskName, setTaskName] = useState("");
   const [taskTime, setTaskTime] = useState("11:11");
-  const [taskDate, setTaskDate] = useState("");
-  const [value, onChange] = useState(new Date());
+  const [taskDate, setTaskDate] = useState(new Date());
 
   function changeTaskName(e) {
     setTaskName(e.target.value);
@@ -21,27 +20,21 @@ const AddTasks = ({ setAtt }) => {
     setTaskTime(e.target.value);
   }
   function changeTaskDate(e) {
-    setTaskDate(e.target.value);
+    const date = new Date(e).toLocaleDateString("pt-br");
+    setTaskDate(date);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      setCalendar(false);
-      let newDate = taskDate;
-      if (taskDate) {
-        const [year, month, day] = taskDate.split("-");
-        const correctDate = new Date(year, month - 1, day, 12);
-        newDate = correctDate.toLocaleDateString("pt-br");
-      }
-
-      if (newDate && taskTime && taskName) {
+      if (taskDate && taskTime && taskName) {
+        console.log(taskDate);
         const newTask = {
           id: Date.now(),
           taskName,
           taskTime,
-          taskDate: newDate,
+          taskDate,
         };
 
         if (newTask) {
@@ -83,7 +76,12 @@ const AddTasks = ({ setAtt }) => {
             value={taskTime}
           />
 
-          <DatePicker onChange={onChange} value={value} />
+          <DatePicker
+            clearIcon={null}
+            format="MM/d/y"
+            onChange={changeTaskDate}
+            value={taskDate}
+          />
 
           {/* <input
             className="add-tasks__input add-tasks__input-date-time"

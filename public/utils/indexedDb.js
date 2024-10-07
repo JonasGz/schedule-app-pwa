@@ -2,7 +2,7 @@ import { auth } from "./firebase";
 
 export const openIndexedDB = () => {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("my-tasks-db", 1);
+    const request = indexedDB.open("my-tasks-db", 2);
 
     request.onsuccess = (event) => {
       resolve(event.target.result);
@@ -10,14 +10,14 @@ export const openIndexedDB = () => {
 
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
-      let store;
       if (!db.objectStoreNames.contains("tasks")) {
-        store = db.createObjectStore("tasks", { keyPath: "id" });
-      } else {
-        store = event.target.transaction.objectStore("tasks");
-      }
-      if (!store.indexNames.contains("userId")) {
+        const store = db.createObjectStore("tasks", { keyPath: "id" });
         store.createIndex("userId", "userId", { unique: false });
+      } else {
+        const store = event.target.transaction.objectStore("tasks");
+        if (!store.indexNames.contains("userId")) {
+          store.createIndex("userId", "userId", { unique: false });
+        }
       }
     };
 
@@ -30,6 +30,9 @@ export const openIndexedDB = () => {
 export const addTask = async (task) => {
   try {
     const user = auth.currentUser;
+    if (!user) {
+      throw new Error("Usuário não autenticado.");
+    }
     const userId = user.uid;
     const db = await openIndexedDB();
     const transaction = db.transaction(["tasks"], "readwrite");
@@ -63,6 +66,9 @@ export const addTask = async (task) => {
 export const getTasks = async () => {
   try {
     const user = auth.currentUser;
+    if (!user) {
+      throw new Error("Usuário não autenticado.");
+    }
     const userid = user.uid;
     const db = await openIndexedDB();
     const transaction = db.transaction(["tasks"], "readonly");
@@ -173,18 +179,22 @@ export const notConcludedTask = async (key) => {
 export const removeTask = async (key) => {
   try {
     const db = await openIndexedDB();
-    const request = db
-      .transaction(["tasks"], "readwrite")
-      .objectStore("tasks")
-      .delete(key);
+    return new Promise((resolve, reject) => {
+      const request = db
+        .transaction(["tasks"], "readwrite")
+        .objectStore("tasks")
+        .delete(key);
 
-    request.onsuccess = () => {
-      console.log("Task deletada com sucesso.");
-    };
+      request.onsuccess = () => {
+        console.log("Task deletada com sucesso.");
+        resolve();
+      };
 
-    request.onerror = (err) => {
-      console.error("Erro ao deletar a task:", err);
-    };
+      request.onerror = (event) => {
+        console.error("Erro ao deletar a task:", event.target.errorCode);
+        reject(`Erro ao deletar a task: ${event.target.errorCode}`);
+      };
+    });
   } catch (error) {
     console.error("Erro ao abrir IndexedDB:", error);
   }

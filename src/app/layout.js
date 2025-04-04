@@ -4,7 +4,7 @@ import "./globals.scss";
 import RegisterServiceWorker from "./register-service-worker";
 
 export const metadata = {
-  title: "Schedule App",
+  title: "Schedule App - Agende sua tarefas!",
   description: "Create by P4N4SONIC",
   manifest: "/manifest.json",
 };

@@ -4,7 +4,6 @@ import "./page.scss";
 import Form from "./components/Form/Form";
 import Navbar from "./components/Navbar/Navbar";
 import { MdLock } from "react-icons/md";
-import PrivateRouter from "./components/PrivateRouter/PrivateRouter";
 
 export default function Home() {
   return (

@@ -1,15 +1,10 @@
 "use client";
 import React from "react";
 import "./Navbar.scss";
-import { logout } from "../../../../public/utils/firebase";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../../../../contexts/AuthContext";
 import HamburgerMenu from "../Menu/Menu";
 import Image from "next/image";
 
 const Navbar = ({ title, subtitle }) => {
-  const router = useRouter();
-  const { user } = useAuth();
 
   const handleDarkMode = () => {
     document.body.classList.toggle('dark')
@@ -32,7 +27,7 @@ const Navbar = ({ title, subtitle }) => {
       </div>
       <div className="navbar__right">
         <div onClick={handleDarkMode} className="navbar__container-dark-mode">
-          <Image className="navbar__dark-mode" src='/images/dark-mode.svg' width={25} height={25} alt="dark-mode" />
+          <Image className="navbar__dark-mode" src='/images/darkmode.svg' width={20} height={20} alt="dark-mode" /> Dark
         </div>
         
       </div>

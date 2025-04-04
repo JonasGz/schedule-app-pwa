@@ -11,7 +11,7 @@ export default function Home() {
     <div className="login">
       <Navbar title="LOGIN" subtitle="Authentication" />
       <div className="login__icon">
-        <MdLock size={92} />
+        <MdLock fill="white" size={92} />
       </div>
 
       <div className="login__form">

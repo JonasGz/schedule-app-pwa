@@ -4,8 +4,8 @@
   "short_name": "ScheduleApp",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "background_color": "#1a1a1a",
+  "theme_color": "#502f7e",
   "icons": [
     {
       "src": "/icons/192x192.png",
@@ -28,17 +28,23 @@
   ],
   "screenshots": [
     {
-      "src": "/screenshots/tasks-mobile.png",
-      "sizes": "491x723",
+      "src": "/screenshots/dark/login-mobile-dark.png",
+      "sizes": "407x828",
       "type": "image/png",
-      "label": "Tela Inicial",
+      "label": "Login",
       "form_factor": "wide"
     },
     {
-      "src": "/screenshots/tasks-desktop.png",
-      "sizes": "1183x721",
+      "src": "/screenshots/dark/dashboard-mobile-dark.png",
+      "sizes": "407x828",
       "type": "image/png",
-      "label": "Tela de tarefas"
+      "label": "Dashboard"
+    },
+    {
+      "src": "/screenshots/dark/add-mobile-dark.png",
+      "sizes": "407x828",
+      "type": "image/png",
+      "label": "Add Tasks"
     }
   ],
   "scope": "/",

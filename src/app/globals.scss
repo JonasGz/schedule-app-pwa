@@ -1,16 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --light: #ffffff;
+  --dark: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1a1a1a; 
-    --foreground: #ededed;
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --background: #1a1a1a; 
+//     --foreground: #ededed;
+//   }
+// }
 
 html,
 body {
@@ -18,14 +18,14 @@ body {
   height: 100dvh;
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--dark);
+  background: var(--light);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   body.dark {
-    background-color: #fff;
-    color: #242424;
+    background-color: #1a1a1a;
+    color: #ededed;
   }
 }
 

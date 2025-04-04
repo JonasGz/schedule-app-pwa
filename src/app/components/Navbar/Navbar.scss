@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: rgb(224, 224, 224);
 
  &__left {
   display: flex;
@@ -15,10 +16,15 @@
 
  &__container-dark-mode {
   background-color: white;
-  border-radius: 50%;
+  border-radius: 2rem;
   display: flex;
   justify-content: center;
-  padding: 0.4rem;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  color: rgb(32, 32, 32);
+  font-weight: 500;
   border: 2px solid rgb(41, 41, 41);
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;

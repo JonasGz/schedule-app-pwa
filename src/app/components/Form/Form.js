@@ -27,6 +27,7 @@ const Form = ({ type }) => {
     e.preventDefault();
     try {
       await signUp(email, password, name);
+      router.push('/dashboard')
     } catch (error) {
       console.error("Erro ao se registrar", error);
     }

@@ -1,14 +1,12 @@
 async function addTaskToFirestore(task) {
   try {
-    console.log("iniciando addTaskToFirestore");
 
     const firebase = await import("firebase/firestore");
-    const firestore = firebase.getFirestore(); // Obtém a instância do Firestore
+    const firestore = firebase.getFirestore();
     const stringId = String(task.id);
 
     const docRef = firebase.doc(firestore, "tasks", stringId);
     await firebase.setDoc(docRef, task);
-    console.log("documento adicionado");
   } catch (error) {
     console.error("Erro ao adicionar documento", error);
   }
@@ -32,24 +30,20 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("sync", (event) => {
-  console.log("sync iniciado:", event.tag);
   if (event.tag === "sync-tasks") {
     event.waitUntil(syncTasksWithFirebase());
   }
 });
 
 async function syncTasksWithFirebase() {
-  console.log("syncTaskWithFirebase iniciado");
-
   const tasks = await getTasksFromIndexedDB();
 
   try {
     for (const task of tasks) {
       await addTaskToFirestore(task);
-      console.log("syncTaskWithFirebase" + task);
     }
   } catch (error) {
-    console.log("erro na adição de tasks", error);
+    console.error("erro na adição de tasks", error);
   }
 }
 

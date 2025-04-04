@@ -7,7 +7,7 @@ import List from "../components/List/List";
 import AddTasks from "../components/AddTasks/AddTasks";
 import Image from "next/image";
 import { useTask } from "../../../contexts/TaskContext";
-import PrivateRouter from "../components/PrivateRouter.js/PrivateRouter";
+import PrivateRouter from "../components/PrivateRouter/PrivateRouter";
 
 export default function Tasks() {
   const { tasks, setAtt } = useTask();

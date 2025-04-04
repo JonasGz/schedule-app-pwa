@@ -84,15 +84,8 @@ const AddTasks = ({ setAtt }) => {
             format="dd/MM/y"
             onChange={changeTaskDate}
             value={taskDate}
+            className="add-tasks__input-date"
           />
-
-          {/* <input
-            className="add-tasks__input add-tasks__input-date-time"
-            type="date"
-            name="date"
-            onChange={changeTaskDate}
-            value={taskDate}
-          /> */}
         </div>
       </div>
       <button className="add-tasks__button">

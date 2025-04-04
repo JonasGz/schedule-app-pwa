@@ -45,28 +45,7 @@ export const TaskProvider = ({ children }) => {
     }
   }
 
-  const loadTasks = async () => {
-    try {
-      const tasksFromDB = await getTasks();
-
-      if (navigator.onLine) {
-        try {
-          const tasksFromFirestore = await getTasksFromFirestore();
-          if (tasksFromFirestore) {
-            syncTasks(tasksFromDB, tasksFromFirestore);
-          } else {
-            syncTasks(tasksFromDB);
-          }
-        } catch (error) {
-          console.log("Erro ao recuperar as tasks do Firestore", error);
-        }
-      } else {
-        setTasks(tasksFromDB);
-      }
-    } catch (error) {
-      console.error("Erro ao carregar e mesclar tarefas:", error);
-    }
-  };
+ 
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -78,7 +57,30 @@ export const TaskProvider = ({ children }) => {
 
   useEffect(() => {
     if (currentUser) {
-      loadTasks();
+      const loadTasks = async () => {
+        try {
+          const tasksFromDB = await getTasks();
+    
+          if (navigator.onLine) {
+            try {
+              const tasksFromFirestore = await getTasksFromFirestore();
+              if (tasksFromFirestore) {
+                syncTasks(tasksFromDB, tasksFromFirestore);
+              } else {
+                syncTasks(tasksFromDB);
+              }
+            } catch (error) {
+              console.log("Erro ao recuperar as tasks do Firestore", error);
+            }
+          } else {
+            setTasks(tasksFromDB);
+          }
+        } catch (error) {
+          console.error("Erro ao carregar e mesclar tarefas:", error);
+        }
+      };
+
+      loadTasks()
     }
   }, [att, currentUser]);
 

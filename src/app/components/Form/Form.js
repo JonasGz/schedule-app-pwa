@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Form.scss";
-import { signUp, signIn } from "../../../../public/utils/firebase";
+import { signUp, signIn, loginWithGoogle } from "../../../../public/utils/firebase";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../../../../contexts/AuthContext";
 import { getAuth } from "firebase/auth";
+import Image from "next/image";
 
 const Form = ({ type }) => {
   const [name, setName] = useState("");
@@ -42,6 +42,16 @@ const Form = ({ type }) => {
     }
   }
 
+  async function handleSignInWithGoogle(e) {
+    e.preventDefault();
+    try {
+      await loginWithGoogle();
+      router.push('/dashboard')
+    } catch(error) {
+      throw new Error(error);
+    }
+  }
+
   return type === "login" ? (
     <form onSubmit={handleSignIn} className="form-container">
       <div className="form-container__inputs">
@@ -68,14 +78,19 @@ const Form = ({ type }) => {
           Login
         </button>
         <span className="form-container__inner-text">
-          No account? Sign up now!
+          No account? <a onClick={() => router.push('/signup')}>
+            <strong className="form-container__login-signup">Sign up now!</strong>
+            </a>
         </span>
-        <button
-          className="form-container__button form-container__button--secondary"
-          type="button"
-          onClick={() => router.push("/signup")}
-        >
-          Sign up
+
+        <div className="form-container__separator">
+          <hr className="form-container__divisor" />
+          <span className="form-container__separator-text">Ou</span>
+          <hr className="form-container__divisor" />
+        </div>
+
+        <button onClick={handleSignInWithGoogle} className="form-container__login-google">
+          {<Image src="/images/googleicon.svg" alt="google-login" width={20} height={20} />} Google
         </button>
       </div>
     </form>
@@ -112,14 +127,17 @@ const Form = ({ type }) => {
           Sign up
         </button>
         <span className="form-container__inner-text">
-          Do you have an account?
+          Do you have an account? <a onClick={() => router.push('/')}><strong className="form-container__login-signup">Login</strong></a>
         </span>
-        <button
-          className="form-container__button form-container__button--secondary"
-          type="button"
-          onClick={() => router.push("/")}
-        >
-          Login
+
+        <div className="form-container__separator">
+          <hr className="form-container__divisor" />
+          <span className="form-container__separator-text">Ou</span>
+          <hr className="form-container__divisor" />
+        </div>
+
+        <button onClick={handleSignInWithGoogle} className="form-container__login-google">
+          {<Image src="/images/googleicon.svg" alt="google-login" width={20} height={20} />} Google
         </button>
       </div>
     </form>

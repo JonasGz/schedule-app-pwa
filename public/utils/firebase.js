@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -30,7 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-// const analytics = getAnalytics(app);
+const googleProvider = new GoogleAuthProvider();
 
 export const addTaskToFirestore = async (task) => {
   try {
@@ -45,7 +47,6 @@ export const addTaskToFirestore = async (task) => {
       const tasksCollectionRef = collection(userDocRef, "tasks");
       const taskDocRef = doc(tasksCollectionRef, stringId);
       await setDoc(taskDocRef, task);
-      console.log("Documento criado ou atualizado com ID específico.");
     } else {
       throw new Error(
         "Dados inválidos para adicionar ao Firestore. Esperado um objeto."
@@ -165,6 +166,33 @@ export const signIn = async (email, password) => {
     throw error;
   }
 };
+
+export const loginWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+
+    const { user } = result;
+
+    if (user) {
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const newUser = {
+          username: user.displayName,
+          email: user.email,
+        };
+        await setDoc(docRef, newUser);
+      } catch (error) {
+        console.error("Erro ao salvar usuário no Firestore", error);
+      }
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Erro ao fazer login com Google:', error.message);
+    throw error;
+  }
+};
+
 
 export const logout = async () => {
   try {

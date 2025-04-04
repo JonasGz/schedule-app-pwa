@@ -6,7 +6,7 @@ import List from "../components/List/List";
 import "./page.scss";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useTask } from "../../../contexts/TaskContext";
-import PrivateRouter from "../components/PrivateRouter.js/PrivateRouter";
+import PrivateRouter from "../components/PrivateRouter/PrivateRouter";
 
 export default function Dashboard() {
   const { name } = useAuth();

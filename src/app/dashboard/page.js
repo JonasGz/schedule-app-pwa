@@ -24,7 +24,7 @@ export default function Dashboard() {
             </div>
             <Image
               className="dashboard__avatar"
-              src="/images/avatar.png"
+              src="/images/avatarsvg.svg"
               width={129}
               height={126}
               alt="Avatar"

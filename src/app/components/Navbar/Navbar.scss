@@ -4,7 +4,30 @@
   background-color: #502f7e;
   display: flex;
   flex-direction: row;
-  // margin-bottom: 4rem;
+  justify-content: space-between;
+
+ &__left {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ }
+
+ &__container-dark-mode {
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  padding: 0.4rem;
+  border: 2px solid rgb(41, 41, 41);
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+ }
+
   &__subtitle {
     font-size: 0.8125rem;
   }

@@ -51,7 +51,7 @@ const AddTasks = ({ setAtt }) => {
             console.error("Erro ao adicionar nova tarefa:", error);
           }
         } else {
-          console.log("Sem NewTask");
+          console.log("Sem newtask");
         }
       }
     } catch (error) {

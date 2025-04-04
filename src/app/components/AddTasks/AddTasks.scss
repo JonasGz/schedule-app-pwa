@@ -35,7 +35,11 @@
   }
 
   &__input-date {
-    font-size: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .react-calendar {
+    box-shadow: none;
   }
 
   &__input-date-time {
@@ -49,7 +53,6 @@
   &__input:focus {
     outline: #a98ed1 0.1rem solid;
     background: #f6f3fa;
-    box-shadow: 3px 2px 4px 0px #c5c5c5, -5px -5px 20px #ffffff
   }
 
   &__button {
@@ -59,7 +62,9 @@
   }
 
   &__add {
-    filter: drop-shadow(0px 2px 4px #c5c5c5);
+    border: 1px solid #622ab1;
+    border-radius: 50%;
+    background-color: #ffffff;
     transition: transform 0.3s, fill 0.3s ease-in-out;
   }
 
@@ -68,6 +73,6 @@
   }
   &__add:active {
     fill: #622ab1;
-    transform: scale(1.6);
+    transform: scale(1.2);
   }
 }

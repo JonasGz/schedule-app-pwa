@@ -3,21 +3,23 @@
   color: #1b1b1b;
   padding: 0.8rem;
   width: 100%;
-  max-width: 40rem;
+  max-width: 30rem;
   border-radius: 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px 0 #c9c9c9;
+  // box-shadow: 0 2px 4px 0 #c9c9c9;
   cursor: pointer;
-  outline: 0.1rem solid transparent;
-  transition: outline ease-out 0.3s;
+  outline: 0.1rem solid rgba(182, 182, 182, 0.439);
+  transition: transform ease-in-out 0.3s, outline ease-in-out 0.3s;
 
   &:hover {
-    outline: #a98ed1 0.1rem solid;
+    outline: #9a73d3 0.1rem solid;
+    transform: scale(1.02);
   }
   &__title {
     font-size: 0.8125rem;
+    font-weight: 500;
   }
 
   &__subtitle {
@@ -50,7 +52,7 @@
     transition: opacity, 0.3s ease-in-out;
   }
   &--completed:hover {
-    opacity: 0.8;
+    opacity: 1;
   }
 
   &--passed {

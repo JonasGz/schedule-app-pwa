@@ -14,6 +14,29 @@
   align-items: center;
  }
 
+ &__right {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+ }
+
+ &__logout {
+  background-color: white;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border: 2px solid rgb(41, 41, 41);
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+ }
+
  &__container-dark-mode {
   background-color: white;
   border-radius: 2rem;

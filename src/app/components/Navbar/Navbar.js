@@ -3,6 +3,8 @@ import React from "react";
 import "./Navbar.scss";
 import HamburgerMenu from "../Menu/Menu";
 import Image from "next/image";
+import { LogOut } from "lucide-react";
+import { logout } from "../../../../public/utils/firebase";
 
 const Navbar = ({ title, subtitle }) => {
 
@@ -26,12 +28,13 @@ const Navbar = ({ title, subtitle }) => {
         </div>
       </div>
       <div className="navbar__right">
+      <div onClick={() => logout()} className="navbar__logout">
+      <LogOut stroke="black" size={20} />
+        </div>
         <div onClick={handleDarkMode} className="navbar__container-dark-mode">
           <Image className="navbar__dark-mode" src='/images/darkmode.svg' width={20} height={20} alt="dark-mode" /> Dark
         </div>
-        
       </div>
-      
     </div>
   );
 };

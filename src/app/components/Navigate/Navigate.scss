@@ -1,0 +1,48 @@
+.navigate {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+
+  &__ul {
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  &__li {
+    position: relative;
+    background-color: #502f7e;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 0;
+    color: white;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  &__li::before {
+    width: 100%;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #652cb6;
+    height: 0%;
+    transition: height 0.4s ease, transform 0.4s ease;
+    transform: skewY(10deg);
+    z-index: -1;
+  }
+
+  &__li:hover::before {
+    height: 100%;
+    transform: skewY(0deg);
+  }
+
+}

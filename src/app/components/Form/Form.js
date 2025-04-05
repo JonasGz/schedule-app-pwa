@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import "./Form.scss";
 import { signUp, signIn, loginWithGoogle } from "../../../../public/utils/firebase";
 import { useRouter } from "next/navigation";
-import { getAuth } from "firebase/auth";
 import Image from "next/image";
+import { useAuth } from "../../../../contexts/AuthContext";
+import Spinner from "../Spinner/Spinner";
 
 const Form = ({ type }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
+  const {user} = useAuth();
   const router = useRouter();
-  const user = getAuth();
 
   function changeName(e) {
     setName(e.target.value);
@@ -25,9 +27,9 @@ const Form = ({ type }) => {
 
   async function handleSignUp(e) {
     e.preventDefault();
+    setIsLoading(true)
     try {
       await signUp(email, password, name);
-      router.push('/dashboard')
     } catch (error) {
       console.error("Erro ao se registrar", error);
     }
@@ -35,9 +37,9 @@ const Form = ({ type }) => {
 
   async function handleSignIn(e) {
     e.preventDefault();
+    setIsLoading(true)
     try {
       await signIn(email, password);
-      router.push("/dashboard");
     } catch (error) {
       console.error("Erro ao logar", error);
     }
@@ -45,12 +47,16 @@ const Form = ({ type }) => {
 
   async function handleSignInWithGoogle(e) {
     e.preventDefault();
+    setIsLoading(true)
     try {
       await loginWithGoogle();
-      router.push('/dashboard')
     } catch(error) {
       throw new Error(error);
     }
+  }
+
+  if(isLoading) {
+    return <Spinner />
   }
 
   return type === "login" ? (

@@ -8,6 +8,7 @@ import AddTasks from "../components/AddTasks/AddTasks";
 import Image from "next/image";
 import { useTask } from "../../../contexts/TaskContext";
 import PrivateRouter from "../components/PrivateRouter/PrivateRouter";
+import Navigate from "../components/Navigate/Navigate";
 
 export default function Tasks() {
   const { tasks, setAtt } = useTask();
@@ -17,6 +18,8 @@ export default function Tasks() {
       <div className="tasks">
         <Navbar title="TASKS" subtitle="Control" />
         <div className="tasks__content">
+         <Navigate />
+
           <div className="tasks__add-tasks">
             <AddTasks setAtt={setAtt} />
           </div>

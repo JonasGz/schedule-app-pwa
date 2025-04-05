@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import "./Menu.scss";
-import { useRouter, usePathname } from "next/navigation";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { usePathname } from "next/navigation";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { MdAddBox } from "react-icons/md";
 import { IoLogIn } from "react-icons/io5";
@@ -10,25 +9,13 @@ import { SiGnuprivacyguard } from "react-icons/si";
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
 import { logout } from "../../../../public/utils/firebase";
+import { useAuth } from "../../../../contexts/AuthContext";
 
 function HamburgerMenu() {
-  const auth = getAuth();
+  const {user} = useAuth()
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const menuRef = useRef(null);
-  const router = useRouter();
   const pathname = usePathname();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (auth.currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-      }
-    });
-    return () => unsubscribe();
-  }, [auth]);
 
   function toggleMenu() {
     setIsOpen(!isOpen);
@@ -52,7 +39,6 @@ function HamburgerMenu() {
 
   async function handleLogout() {
     await logout();
-    router.push("/");
   }
 
   return (

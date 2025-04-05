@@ -7,16 +7,21 @@ import "./page.scss";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useTask } from "../../../contexts/TaskContext";
 import PrivateRouter from "../components/PrivateRouter/PrivateRouter";
+import { SquarePlus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Navigate from "../components/Navigate/Navigate";
 
 export default function Dashboard() {
   const { name } = useAuth();
   const { tasks } = useTask();
+  const router = useRouter();
 
   return (
     <PrivateRouter>
       <div className="dashboard">
         <Navbar title="DASHBOARD" subtitle="Welcome" />
         <div className="dashboard__content">
+          <Navigate />
           <div className="dashboard__user">
             <div className="dashboard__welcome">
               <span className="dashboard__hello">Hello,</span>
@@ -40,7 +45,7 @@ export default function Dashboard() {
           />
 
           <div className="dashboard__tasks">
-            <List tasks={tasks} concluded={true} />
+            {tasks.length > 0 ? <List tasks={tasks} concluded={true} /> : <div onClick={() => router.push('/tasks')} className="dashboard__add-task">Add Task <SquarePlus size={28} /></div>}
           </div>
         </div>
       </div>

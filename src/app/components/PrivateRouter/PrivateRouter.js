@@ -1,28 +1,25 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
+import Spinner from "../Spinner/Spinner";
 
 const PrivateRouter = ({ children }) => {
   const { user, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const publicRoutes = ["/register"];
-  const [authentication, setAuthentication] = useState(null);
 
   useEffect(() => {
-    if (!loading) {
-      setAuthentication(user);
-      if (!user && !publicRoutes.includes(pathname)) {
+    if (!loading && !user && !publicRoutes.includes(pathname)) {
         router.push("/");
-      }
     }
-  }, [user, loading, pathname, publicRoutes]);
+  }, [user, loading, pathname, router]);
 
   if (loading) {
-    return <h3>Carregando...</h3>;
+    return <Spinner />
   }
-  return authentication || publicRoutes.includes(pathname) ? children : null;
+  return user || publicRoutes.includes(pathname) ? children : null;
 };
 
 export default PrivateRouter;

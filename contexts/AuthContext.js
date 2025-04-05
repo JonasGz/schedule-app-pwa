@@ -29,12 +29,12 @@ export const AuthProvider = ({ children }) => {
       .catch((error) => {
         console.error("Erro ao definir persistência", error);
       });
-  }, []);
+  }, [user, loading]);
 
   useEffect(() => {
     if (!loading && user) {
       setName(user.displayName);
-      // router.push("/dashboard");
+      router.push('/dashboard')
     } else {
       setUser(null);
       setLoading(true);

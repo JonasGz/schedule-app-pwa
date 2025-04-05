@@ -10,7 +10,7 @@ export default function Signup() {
     <div className="signup">
       <Navbar title="SIGN UP" subtitle="Register" />
       <div className="signup__icon">
-        <MdAccountCircle size={92} />
+        <MdAccountCircle fill="white" size={92} />
       </div>
 
       <div className="signup__form">

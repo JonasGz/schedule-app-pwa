@@ -17,8 +17,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   body.dark {
-    background-color: #1a1a1a;
-    color: #ededed;
+    background-color: var(--dark);
+    color: var(--light);
   }
 }
 

@@ -8,9 +8,8 @@ const List = ({ concluded, tasks }) => {
   const [tasksToday, setTasksToday] = useState([]);
   const [tasksTodayPasseds, setTasksTodayPasseds] = useState([]);
   const [tasksPasseds, setTasksPasseds] = useState([]);
-
+  
   const completedTasks = tasks.filter((task) => task.completed);
-  // const toDoTasks = tasks.filter((task) => !task.completed);
 
   function getCurrentTime() {
     const now = new Date();
@@ -21,9 +20,6 @@ const List = ({ concluded, tasks }) => {
     if (minutes < 10) minutes = "0" + minutes;
     return `${hours}:${minutes}`;
   }
-
-
-
 
   useEffect(() => {
     function filterTasks(tasks) {
@@ -80,6 +76,8 @@ const List = ({ concluded, tasks }) => {
     if(tasks.length > 0 ) filterTasks(tasks)
   }, [tasks]);
 
+  if(tasks.length <= 0) return;
+
   return concluded ? (
     <ul className="list">
       {completedTasks.map((task) => (
@@ -90,13 +88,13 @@ const List = ({ concluded, tasks }) => {
           time={task.taskTime}
           date={task.taskDate}
           completed={true}
+          updateAt={task.updateAt}
         />
       ))}
     </ul>
   ) : (
     <ul className="list">
-      <h3 className="list__title">Future</h3>
-      {tasksFuture &&
+      {tasksFuture && 
         tasksFuture.map((task) => (
           <Tile
             key={task.id}
@@ -105,6 +103,7 @@ const List = ({ concluded, tasks }) => {
             time={task.taskTime}
             date={task.taskDate}
             completed={false}
+            updateAt={task.updateAt}
           />
         ))}
 
@@ -119,6 +118,7 @@ const List = ({ concluded, tasks }) => {
             time={task.taskTime}
             date={task.taskDate}
             completed={false}
+            updateAt={task.updateAt}
           />
         ))}
       {tasksTodayPasseds &&
@@ -131,6 +131,7 @@ const List = ({ concluded, tasks }) => {
             date={task.taskDate}
             completed={false}
             passed={true}
+            updateAt={task.updateAt}
           />
         ))}
       <h3 className="list__title">Passeds</h3>
@@ -145,6 +146,7 @@ const List = ({ concluded, tasks }) => {
             date={task.taskDate}
             completed={false}
             passed={true}
+            updateAt={task.updateAt}
           />
         ))}
     </ul>

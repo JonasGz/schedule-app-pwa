@@ -2,10 +2,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { addTask, getTasks } from "../public/utils/indexedDb";
 import {
-  auth,
   getTasksFromFirestore,
   addTaskToFirestore,
 } from "../public/utils/firebase";
+import { useAuth } from "./AuthContext";
 
 const TaskContext = createContext();
 
@@ -14,14 +14,26 @@ export const useTask = () => useContext(TaskContext);
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [att, setAtt] = useState(0);
-  const [currentUser, setCurrentUser] = useState(auth.currentUser);
+  const {user} = useAuth();
 
   async function syncTasks(tasksFromDB, tasksFromFirestore) {
     try {
       if (tasksFromFirestore) {
         const tasksMap = new Map();
-        tasksFromDB.forEach((task) => tasksMap.set(task.id, task));
-        tasksFromFirestore.forEach((task) => tasksMap.set(task.id, task));
+
+        tasksFromDB.forEach((task) => {
+          tasksMap.set(task.id, task);
+        });
+
+        tasksFromFirestore.forEach((taskFS) => {
+          const taskLocal = tasksMap.get(taskFS.id);
+          if (
+            !taskLocal ||
+            new Date(taskFS.updateAt) > new Date(taskLocal.updateAt)
+          ) {
+            tasksMap.set(taskFS.id, taskFS);
+          }
+        });
         const mergedTasks = Array.from(tasksMap.values());
         await Promise.all(
           mergedTasks.map(async (task) => {
@@ -30,7 +42,7 @@ export const TaskProvider = ({ children }) => {
               await addTaskToFirestore(task);
             } catch (error) {
               console.error(
-                "Erro ao adicionar tarefa durante a sincronização: ",
+                "Erro ao adicionar tarefa na sincronização: ",
                 error
               );
             }
@@ -45,18 +57,8 @@ export const TaskProvider = ({ children }) => {
     }
   }
 
- 
-
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    if (currentUser) {
+    if (user) {
       const loadTasks = async () => {
         try {
           const tasksFromDB = await getTasks();
@@ -82,7 +84,7 @@ export const TaskProvider = ({ children }) => {
 
       loadTasks()
     }
-  }, [att, currentUser]);
+  }, [att, user]);
 
   return (
     <TaskContext.Provider value={{ tasks, setAtt }}>

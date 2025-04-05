@@ -15,7 +15,6 @@ import {
   getDocs,
   doc,
   deleteDoc,
-  update,
   updateDoc,
 } from "firebase/firestore";
 
@@ -33,6 +32,8 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+
+
 
 export const addTaskToFirestore = async (task) => {
   try {
@@ -57,11 +58,24 @@ export const addTaskToFirestore = async (task) => {
   }
 };
 
+export const updatedTaskFromFirestore = async (task) => {
+  try {
+    const user = auth.currentUser;
+    const userid = user.uid;
+    const stringId = String(task.id);
+    const userDocRef = doc(db, 'users', userid);
+    const tasksCollectionRef = collection(userDocRef, "tasks")
+    const taskDocRef = doc(tasksCollectionRef, stringId);
+    await setDoc(taskDocRef, task)
+  } catch(error) {
+    console.error(error)
+  }
+}
+
 export const removeTaskFromFirestore = async (taskId) => {
   try {
     const user = auth.currentUser;
     const userid = user.uid;
-
     const stringId = String(taskId);
     const userDocRef = doc(db, "users", userid);
     const tasksCollectionRef = collection(userDocRef, "tasks");
@@ -77,7 +91,6 @@ export const getTasksFromFirestore = async () => {
   try {
     const user = auth.currentUser;
     const userid = user.uid;
-
     const userDocRef = doc(db, "users", userid);
     const tasksCollectionRef = collection(userDocRef, "tasks");
     const querySnapshot = await getDocs(tasksCollectionRef);
@@ -95,7 +108,6 @@ export const concludedTaskFirestore = async (taskId) => {
   try {
     const user = auth.currentUser;
     const userid = user.uid;
-
     const stringId = String(taskId);
     const userDocRef = doc(db, "users", userid);
     const tasksCollectionRef = collection(userDocRef, "tasks");
@@ -110,7 +122,6 @@ export const notConludedTaksFirestore = async (taskId) => {
   try {
     const user = auth.currentUser;
     const userid = user.uid;
-
     const stringId = String(taskId);
     const userDocRef = doc(db, "users", userid);
     const tasksCollectionRef = collection(userDocRef, "tasks");

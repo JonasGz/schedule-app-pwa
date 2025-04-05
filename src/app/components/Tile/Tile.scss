@@ -8,10 +8,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // box-shadow: 0 2px 4px 0 #c9c9c9;
   cursor: pointer;
   outline: 0.1rem solid rgba(182, 182, 182, 0.439);
   transition: transform ease-in-out 0.3s, outline ease-in-out 0.3s;
+
+  &__input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.3rem;
+    border-radius: 0.4rem;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+  &__edit-icon {
+    transition: transform 0.2s ease;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 
   &:hover {
     outline: #9a73d3 0.1rem solid;
@@ -47,7 +62,7 @@
   }
 
   &--completed {
-    background-color: #71519d;
+    background-color: #502f7e;
     color: #fff;
     transition: opacity, 0.3s ease-in-out;
   }

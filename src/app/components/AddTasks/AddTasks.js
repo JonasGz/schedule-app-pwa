@@ -25,9 +25,17 @@ const AddTasks = ({ setAtt }) => {
     setTaskDate(e);
   }
 
+  async function saveTask(task) {
+    try {
+      await addTask(task);
+      setAtt((a) => a + 1); 
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       if (taskDate && taskTime && taskName) {
         const date = new Date(taskDate);
@@ -37,22 +45,9 @@ const AddTasks = ({ setAtt }) => {
           taskName,
           taskTime,
           taskDate: formattedDate,
+          updateAt: new Date(),
         };
-
-        if (newTask) {
-          try {
-            await addTask(newTask);
-            setAtt((a) => a + 1);
-            if (navigator.onLine) {
-              await addTaskToFirestore(newTask);
-              setAtt((a) => a + 1);
-            }
-          } catch (error) {
-            console.error("Erro ao adicionar nova tarefa:", error);
-          }
-        } else {
-          console.log("Sem newtask");
-        }
+          await saveTask(newTask);
       }
     } catch (error) {
       console.error(error);

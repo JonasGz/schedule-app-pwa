@@ -8,8 +8,6 @@ import { usePathname } from 'next/navigation';
 const Navigate = () => {
   const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname.includes('/dashboard'));
-  
 
   return(
     <div className="navigate">

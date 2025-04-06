@@ -4,19 +4,21 @@ import { useEffect } from "react";
 
 const RegisterServiceWorker = () => {
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
+    if ("serviceWorker" in navigator && "SyncManager" in window) {
       navigator.serviceWorker
-        .register("/service-worker.js")
-        .then((registration) => {
+        .register("/sw.js")
+        .then(() => {
           return navigator.serviceWorker.ready;
         })
         .then((registration) => {
           return registration.sync.register("sync-tasks");
         })
         .then(() => {
-          console.log("sync event registered!");
+          console.log("✔️ sync-tasks registrado com sucesso!");
         })
-        .catch((error) => console.log("Error:", error));
+        .catch((error) => {
+          console.error("Erro ao registrar sync-tasks:", error);
+        });
     }
   }, []);
 

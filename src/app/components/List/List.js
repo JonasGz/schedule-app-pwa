@@ -94,6 +94,8 @@ const List = ({ concluded, tasks }) => {
     </ul>
   ) : (
     <ul className="list">
+      <h3 className="list__title">Future</h3>
+
       {tasksFuture && 
         tasksFuture.map((task) => (
           <Tile

@@ -9,7 +9,6 @@
   }
 
   &__tasks {
-    max-height: 40vh;
     height: 100%;
     width: 100%;
     mask-image: linear-gradient(
@@ -21,10 +20,17 @@
   }
 
   &__content {
-    min-height: 100%;
+    padding: 1rem 0 0 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+  }
+}
+
+@media (min-width: 667px) {
+  .tasks {
+    max-height: 40vh;
   }
 }

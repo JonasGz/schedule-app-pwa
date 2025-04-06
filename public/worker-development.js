@@ -5492,19 +5492,19 @@ __webpack_require__.r(__webpack_exports__);
 }) => request.destination === 'document', new workbox_strategies__WEBPACK_IMPORTED_MODULE_2__.StaleWhileRevalidate());
 self.addEventListener("sync", event => {
   if (event.tag === "sync-tasks") {
-    event.waitUntil(syncTasksWithFirebase());
+    event.waitUntil(getTasksFromIndexedDB().then(tasks => {
+      // Envia mensagem para a página principal para lidar com o Firebase
+      return self.clients.matchAll().then(clients => {
+        return Promise.all(clients.map(client => {
+          return client.postMessage({
+            type: 'SYNC_TASKS',
+            tasks: tasks
+          });
+        }));
+      });
+    }));
   }
 });
-async function syncTasksWithFirebase() {
-  const tasks = await getTasksFromIndexedDB();
-  for (const task of tasks) {
-    try {
-      await addTaskToFirestore(task);
-    } catch (error) {
-      console.error("Erro ao sincronizar tarefa:", error);
-    }
-  }
-}
 
 // Funções auxiliares
 function getTasksFromIndexedDB() {

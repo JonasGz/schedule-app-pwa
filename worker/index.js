@@ -1,29 +1,36 @@
-import { precacheAndRoute } from 'workbox-precaching';
+const CACHE_NAME = 'offline-tasks';
+const PRECACHE_URLS = ['/']; // Apenas URLs essenciais
 
-// Precaching
-precacheAndRoute(self.__WB_MANIFEST);
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_URLS))
+      .then(self.skipWaiting())
+  );
+});
 
-// Background Sync Handler
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener('sync', (event) => {
   if (event.tag === 'sync-tasks') {
     event.waitUntil(
-      (async () => {
-        // Envia mensagem para a página principal
-        const clients = await self.clients.matchAll();
-        return Promise.all(clients.map(client => {
-          return client.postMessage({
-            type: 'SYNC_TASKS_REQUEST',
-            timestamp: Date.now()
-          });
-        }));
-      })()
+      self.clients.matchAll({ type: 'window' })
+        .then((clients) => {
+          if (clients.length) {
+            clients[0].postMessage({ type: 'TRIGGER_SYNC' });
+          }
+        })
     );
   }
 });
 
-// Mensagem para quando offline
-self.addEventListener('message', (event) => {
-  if (event.data?.type === 'OFFLINE_TASK_SAVED') {
-    // Pode adicionar lógica adicional aqui se necessário
+// Fallback para quando offline
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/offline.html'))
+    );
   }
 });

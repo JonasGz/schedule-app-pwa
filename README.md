@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Schedule Pwa
 
-## Getting Started
+Bem-vindo ao Schedule PWA, este documento README irá guiá-lo através das informações básicas sobre o projeto.
 
-First, run the development server:
+## **Introdução**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O Schedule PWA é um projeto mobile/desktop com a tecnologia PWA (Progressive Web App) com o objetivo de possibilitar o agendamento de tarefas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## **Contato**
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Se tiver alguma dúvida ou precisar de ajuda, fique à vontade para entrar em contato comigo [Linkedin](https://www.linkedin.com/in/jonas-chagas/).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Obrigado pelo seu interesse no Schedule PWA! Espero que você aproveite o aplicativo tanto foi legal de construí-lo.
 
-## Learn More
+## **Screenshots**
 
-To learn more about Next.js, take a look at the following resources:
+### **Mobile**
+![image](https://github.com/user-attachments/assets/5b47d04c-78a4-43e0-abc0-2a93937706f9)
+![image](https://github.com/user-attachments/assets/43672b7c-b6db-4b20-b3d3-426db5bf6a65)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **Desktop**
+![image](https://github.com/user-attachments/assets/d6cb3233-b929-43d9-a582-ac90cf274b47)
+![image](https://github.com/user-attachments/assets/1e15fcdc-d288-44e6-92e3-cd3de38e9e2b)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+

@@ -30,13 +30,16 @@ const RegisterServiceWorker = () => {
   }, []);
 
   async function syncWithFirebase(tasks) {
-    const { getFirestore, doc, setDoc } = await import("firebase/firestore");
+    const { getFirestore, doc, setDoc, collection } = await import("firebase/firestore");
     const firestore = getFirestore();
     
     for (const task of tasks) {
       try {
-        const docRef = doc(firestore, "tasks", String(task.id));
-        await setDoc(docRef, task);
+        const taskId = String(task.id)
+        const userDocRef = doc(firestore, 'users', task.userId);
+        const collectionTasksRef = collection(userDocRef, 'tasks');
+        const taskDocRef = doc(collectionTasksRef, taskId);
+        await setDoc(taskDocRef, task);
       } catch (error) {
         console.error("Erro ao sincronizar tarefa:", error);
       }

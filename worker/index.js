@@ -32,7 +32,7 @@ self.addEventListener("sync", (event) => {
 // Funções auxiliares
 function getTasksFromIndexedDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("my-tasks-db", 1);
+    const request = indexedDB.open("my-tasks-db", 2);
 
     request.onsuccess = (event) => {
       const db = event.target.result;
@@ -45,11 +45,4 @@ function getTasksFromIndexedDB() {
 
     request.onerror = () => reject("Erro ao abrir IndexedDB");
   });
-}
-
-async function addTaskToFirestore(task) {
-  const firebase = await import("firebase/firestore");
-  const firestore = firebase.getFirestore();
-  const docRef = firebase.doc(firestore, "tasks", String(task.id));
-  await firebase.setDoc(docRef, task);
 }

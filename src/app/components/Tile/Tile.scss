@@ -50,7 +50,7 @@
   }
 
   &__button-not-completed {
-    filter: drop-shadow(0px 2px 4px #797979);
+    // filter: drop-shadow(0px 2px 4px #797979);
     transition: transform 0.3s, fill 0.3s;
   }
   &__button-not-completed:hover {

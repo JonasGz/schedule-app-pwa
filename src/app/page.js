@@ -10,11 +10,15 @@ export default function Home() {
     <div className="login">
       <Navbar title="LOGIN" subtitle="Authentication" />
       <div className="login__icon">
-        <MdLock fill="white" size={92} />
+        <h3>Welcome</h3>
+        <span className="login__text-icon">Enter your details below</span>
       </div>
 
       <div className="login__form">
-        <Form type="login" />
+        <div className="login__container-form">
+          <Form type="login" />
+        </div>
+        <div className="login__container-shadow"></div>
       </div>
     </div>
   );
